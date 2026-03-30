@@ -1101,9 +1101,9 @@ function renderCards(list) {
           refNote +
         '</div>' +
         '<div class="cf-card-footer">' +
-          '<button class="cf-interest-btn" onclick="openInterest(' + JSON.stringify(c.interestSubject) + ')">🃏 Register Group Interest</button>' +
-          '<button class="cf-info-btn" style="background:white;border:1.5px solid #c8aa5a;color:#0a1628;cursor:pointer;font-family:Lato,sans-serif;" onclick="softPrompt(' + JSON.stringify(c.interestSubject) + ',' + JSON.stringify(c.infoUrl) + ')">More Information →</button>' +
-          '<button class="cf-book-btn" style="cursor:pointer;font-family:Lato,sans-serif;" onclick="softPrompt(' + JSON.stringify(c.interestSubject) + ',' + JSON.stringify(c.infoUrl) + ')">Book via ' + getBookLabel(c.line) + ' →</button>' +
+          '<a class="cf-interest-btn" href="' + GOOGLE_FORM_URL + '" target="_blank" rel="noopener">🃏 Register Group Interest</a>' +
+          '<a class="cf-info-btn sp-trigger" href="' + c.infoUrl + '" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '">More Information →</a>' +
+          '<a class="cf-book-btn sp-trigger" href="' + c.infoUrl + '" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '">Book via ' + getBookLabel(c.line) + ' →</a>' +
         '</div>' +
       '</div>'
     );
@@ -1168,7 +1168,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Wire up buttons
   document.getElementById('cf-search-btn').addEventListener('click', applyFilters);
   document.getElementById('cf-reset-btn').addEventListener('click', resetFilters);
-  // Wire soft prompt buttons
+  // Wire soft prompt modal buttons
   document.getElementById('sp-btn-register').addEventListener('click', function() {
     closeSoftPrompt();
     window.open(GOOGLE_FORM_URL, '_blank');
@@ -1180,6 +1180,17 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   document.getElementById('sp-modal').addEventListener('click', function(e) {
     if (e.target === this) closeSoftPrompt();
+  });
+
+  // Event delegation for soft-prompt triggers on cards
+  document.getElementById('cruise-grid').addEventListener('click', function(e) {
+    var trigger = e.target.closest('.sp-trigger');
+    if (trigger) {
+      e.preventDefault();
+      var cruise = trigger.getAttribute('data-cruise');
+      var url    = trigger.getAttribute('data-url');
+      softPrompt(cruise, url);
+    }
   });
 
   // Update hero stat
