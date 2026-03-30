@@ -1111,73 +1111,20 @@ function resetFilters() {
     'Select filters and press <strong>Search</strong>, or press Search to see all cruises';
 }
 
-// ── INTEREST MODAL ───────────────────────────────────────────────────────────
+// ── INTEREST — opens Google Form in new tab ─────────────────────────────────
+var GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf2WkDMVTfTmN7sCACBHiT5u1BpF9o7t8VOlAUj4jCqaLCdDA/viewform';
+
 function openInterest(cruiseName) {
-  document.getElementById('modal-cruise-name').textContent = cruiseName;
-  document.getElementById('form-cruise').value = cruiseName;
-  document.getElementById('interest-form').reset();
-  document.getElementById('interest-form-wrap').style.display = 'block';
-  document.getElementById('success-msg').style.display = 'none';
-  document.getElementById('interest-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  window.open(GOOGLE_FORM_URL, '_blank');
 }
 
-function closeModal() {
-  document.getElementById('interest-modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-// Submit — posts to a Google Form or falls back to mailto
-function submitInterest(e) {
-  e.preventDefault();
-  var form = e.target;
-  var data = {
-    cruise:     form.cruise.value,
-    firstName:  form.firstName.value,
-    lastName:   form.lastName.value,
-    email:      form.email.value,
-    phone:      form.phone.value,
-    travellers: form.travellers.value,
-    standard:   form.standard.value,
-    notes:      form.notes.value
-  };
-
-  // Build mailto as the reliable delivery method
-  var subject = encodeURIComponent('Bridge Group Interest — ' + data.cruise);
-  var body = encodeURIComponent(
-    'Name: ' + data.firstName + ' ' + data.lastName + '\n' +
-    'Email: ' + data.email + '\n' +
-    'Phone: ' + (data.phone || 'not provided') + '\n' +
-    'Travellers: ' + data.travellers + '\n' +
-    'Standard: ' + data.standard + '\n' +
-    'Cruise: ' + data.cruise + '\n' +
-    'Notes: ' + (data.notes || 'none')
-  );
-
-  // Open mailto silently in background (won't always fire from iframe)
-  var mailLink = 'mailto:admin@bridgescorer.com?subject=' + subject + '&body=' + body;
-
-  // Show success regardless
-  document.getElementById('interest-form-wrap').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
-
-  // Attempt mailto open
-  try { window.open(mailLink, '_self'); } catch(err) {}
-
-  // Auto-close modal after 3s
-  setTimeout(closeModal, 3000);
-}
+function closeModal() {}
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   // Wire up buttons
   document.getElementById('cf-search-btn').addEventListener('click', applyFilters);
   document.getElementById('cf-reset-btn').addEventListener('click', resetFilters);
-  document.getElementById('modal-close-btn').addEventListener('click', closeModal);
-  document.getElementById('interest-modal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
-  });
-
   // Update hero stat
   var total = readyCruises().length;
   document.getElementById('stat-cruises').textContent = total;
