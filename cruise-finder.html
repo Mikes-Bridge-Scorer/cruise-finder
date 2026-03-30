@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridge Cruise Finder — Bridge at Sea</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   BRIDGE CRUISE FINDER
+   Navy #0a1628 · Gold #c8aa5a · Cream #f0e8d0
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Lato, sans-serif;
+  color: #333;
+  background: #f5f0e8;
+  padding: 24px 16px 48px;
+}
+
+.cf-wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* ── HERO ───────────────────────────────────────────────────── */
+.cf-hero {
+  background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 100%);
+  color: #f0e8d0;
+  padding: 52px 40px;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.cf-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8aa5a' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+.cf-hero .eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #c8aa5a;
+  margin-bottom: 14px;
+  position: relative;
+}
+.cf-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  color: #f0e8d0;
+  margin-bottom: 14px;
+  line-height: 1.2;
+  position: relative;
+}
+.cf-hero h1 em { color: #c8aa5a; font-style: italic; }
+.cf-hero p {
+  font-size: 1rem;
+  color: #c8c0a8;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  position: relative;
+}
+.cf-hero .hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.hero-stat { text-align: center; }
+.hero-stat .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #c8aa5a;
+  display: block;
+}
+.hero-stat .lbl {
+  font-size: 0.75rem;
+  color: #a09880;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── FILTERS ────────────────────────────────────────────────── */
+.cf-filters {
+  background: white;
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+  box-shadow: 0 2px 16px rgba(10,22,40,0.07);
+}
+.cf-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 160px;
+  flex: 1;
+}
+.cf-filter-group label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 700;
+}
+.cf-filter-group select {
+  padding: 9px 12px;
+  border: 1.5px solid #e8e0cc;
+  border-radius: 5px;
+  font-family: Lato, sans-serif;
+  font-size: 0.9rem;
+  color: #333;
+  background: white;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c8aa5a' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+.cf-filter-group select:focus {
+  outline: none;
+  border-color: #c8aa5a;
+  box-shadow: 0 0 0 3px rgba(200,170,90,0.15);
+}
+.cf-btn-row {
+  display: flex;
+  gap: 10px;
+  align-self: flex-end;
+}
+.cf-search-btn, .cf-reset-btn {
+  padding: 9px 26px;
+  border: none;
+  border-radius: 5px;
+  font-family: Lato, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s, transform 0.1s;
+}
+.cf-search-btn {
+  background: #c8aa5a;
+  color: #0a1628;
+}
+.cf-search-btn:hover { background: #d4b86a; transform: translateY(-1px); }
+.cf-reset-btn {
+  background: #0a1628;
+  color: #f0e8d0;
+}
+.cf-reset-btn:hover { background: #1a2d4a; }
+
+/* ── RESULTS BAR ────────────────────────────────────────────── */
+.cf-results-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+  color: #888;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cf-results-bar strong { color: #0a1628; }
+
+/* ── GRID ───────────────────────────────────────────────────── */
+.cf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+  margin-bottom: 48px;
+}
+
+/* ── CARD ───────────────────────────────────────────────────── */
+.cf-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 12px rgba(10,22,40,0.07);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.cf-card:hover {
+  box-shadow: 0 10px 36px rgba(10,22,40,0.14);
+  transform: translateY(-3px);
+}
+.cf-card-header {
+  background: linear-gradient(135deg, #0a1628 0%, #162238 100%);
+  padding: 18px 20px 14px;
+  position: relative;
+}
+.cf-card-line {
+  color: #c8aa5a;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+.cf-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: #f0e8d0;
+  line-height: 1.35;
+  padding-right: 80px;
+}
+.cf-card-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.cf-badge-hosted { background: #c8aa5a; color: #0a1628; }
+.cf-badge-unhosted { background: rgba(255,255,255,0.1); color: #c8c0a8; border: 1px solid rgba(200,170,90,0.3); }
+
+.cf-card-body { padding: 16px 20px 12px; flex: 1; }
+.cf-detail {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-bottom: 7px;
+  font-size: 0.86rem;
+  color: #555;
+  line-height: 1.4;
+}
+.cf-detail-icon { flex-shrink: 0; width: 16px; }
+.cf-detail strong { color: #0a1628; }
+.cf-sea-days-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #edf6e2;
+  border: 1px solid #b8d898;
+  color: #3d6e1a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-top: 6px;
+}
+.cf-fly-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #e8f0f8;
+  border: 1px solid #9ab8d8;
+  color: #1a4a7a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 3px;
+  margin-top: 6px;
+  margin-left: 6px;
+}
+
+/* Price */
+.cf-card-price {
+  padding: 12px 20px;
+  border-top: 1px solid #f0e8d0;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.cf-price-from { font-size: 0.72rem; color: #999; }
+.cf-price-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.45rem;
+  color: #0a1628;
+  font-weight: 700;
+}
+.cf-price-pp { font-size: 0.78rem; color: #999; }
+.cf-ref { font-size: 0.68rem; color: #bbb; margin-left: auto; }
+
+/* Footer */
+.cf-card-footer { padding: 12px 20px 18px; display: flex; flex-direction: column; gap: 8px; }
+.cf-info-btn, .cf-book-btn, .cf-interest-btn {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.18s, transform 0.1s;
+}
+.cf-info-btn {
+  background: #f0e8d0;
+  color: #0a1628;
+  border: 1.5px solid #c8aa5a;
+}
+.cf-info-btn:hover { background: #e8dcc0; }
+.cf-book-btn {
+  background: #c8aa5a;
+  color: #0a1628;
+}
+.cf-book-btn:hover { background: #d4b86a; transform: translateY(-1px); }
+.cf-interest-btn {
+  background: #0a1628;
+  color: #f0e8d0;
+  border: none;
+  cursor: pointer;
+  font-family: Lato, sans-serif;
+  width: 100%;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+.cf-interest-btn:hover { background: #1a2d4a; }
+
+/* ── NO RESULTS ─────────────────────────────────────────────── */
+.cf-no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: #888;
+  grid-column: 1 / -1;
+  background: white;
+  border-radius: 10px;
+}
+.cf-no-results h3 {
+  font-family: 'Playfair Display', serif;
+  color: #0a1628;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+}
+
+/* ── JOIN BANNER ────────────────────────────────────────────── */
+.cf-join-banner {
+  background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 100%);
+  color: #f0e8d0;
+  padding: 40px 48px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.cf-join-banner h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.cf-join-banner h3 em { color: #c8aa5a; font-style: italic; }
+.cf-join-banner p { font-size: 0.95rem; color: #c8c0a8; max-width: 500px; line-height: 1.6; }
+.cf-join-btn {
+  display: inline-block;
+  background: #c8aa5a;
+  color: #0a1628;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 14px 36px;
+  border-radius: 5px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.18s;
+}
+.cf-join-btn:hover { background: #d4b86a; }
+
+/* ── MODAL ──────────────────────────────────────────────────── */
+.cf-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,22,40,0.75);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.cf-modal-overlay.open { display: flex; }
+.cf-modal {
+  background: white;
+  border-radius: 10px;
+  max-width: 500px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  animation: modalIn 0.22s ease;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+.cf-modal-header {
+  background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 100%);
+  padding: 22px 24px 18px;
+  position: relative;
+}
+.cf-modal-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: #f0e8d0;
+  margin-bottom: 4px;
+}
+.cf-modal-header p { font-size: 0.82rem; color: #a09880; }
+.cf-modal-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: none;
+  border: none;
+  color: #c8aa5a;
+  font-size: 1.4rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.cf-modal-body { padding: 24px; }
+.cf-modal-cruise-name {
+  background: #f8f4ec;
+  border-left: 3px solid #c8aa5a;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  color: #0a1628;
+  font-weight: 600;
+  margin-bottom: 20px;
+  border-radius: 0 4px 4px 0;
+}
+.cf-form-group { margin-bottom: 16px; }
+.cf-form-group label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 6px;
+}
+.cf-form-group input, .cf-form-group select, .cf-form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e8e0cc;
+  border-radius: 5px;
+  font-family: Lato, sans-serif;
+  font-size: 0.9rem;
+  color: #333;
+  background: white;
+}
+.cf-form-group input:focus,
+.cf-form-group select:focus,
+.cf-form-group textarea:focus {
+  outline: none;
+  border-color: #c8aa5a;
+  box-shadow: 0 0 0 3px rgba(200,170,90,0.15);
+}
+.cf-form-group textarea { resize: vertical; min-height: 72px; }
+.cf-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cf-submit-btn {
+  width: 100%;
+  padding: 12px;
+  background: #c8aa5a;
+  color: #0a1628;
+  border: none;
+  border-radius: 5px;
+  font-family: Lato, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.18s;
+}
+.cf-submit-btn:hover { background: #d4b86a; }
+.cf-success-msg {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+.cf-success-msg .tick { font-size: 2.5rem; margin-bottom: 12px; }
+.cf-success-msg h3 {
+  font-family: 'Playfair Display', serif;
+  color: #0a1628;
+  margin-bottom: 8px;
+}
+.cf-success-msg p { color: #666; font-size: 0.9rem; line-height: 1.5; }
+
+/* ── RESPONSIVE ─────────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .cf-hero { padding: 36px 20px; }
+  .cf-hero h1 { font-size: 1.75rem; }
+  .cf-filters { padding: 18px; }
+  .cf-filter-group { min-width: 100%; flex: none; }
+  .cf-btn-row { width: 100%; }
+  .cf-search-btn, .cf-reset-btn { flex: 1; }
+  .cf-join-banner { padding: 28px 24px; flex-direction: column; text-align: center; }
+  .cf-form-row { grid-template-columns: 1fr; }
+  .hero-stats { gap: 20px; }
+}
+</style>
+</head>
+<body>
+<div class="cf-wrap">
+
+  <!-- HERO -->
+  <div class="cf-hero">
+    <div class="eyebrow">Bridge at Sea · Cruise Finder</div>
+    <h1>Find your perfect <em>bridge cruise</em></h1>
+    <p>Curated voyages with 5+ sea days — handpicked for bridge players. Every listing links directly to the cruise details page so you can research and book with confidence.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num" id="stat-cruises">—</span><span class="lbl">Cruises Listed</span></div>
+      <div class="hero-stat"><span class="num" id="stat-lines">9</span><span class="lbl">Cruise Lines</span></div>
+      <div class="hero-stat"><span class="num">5+</span><span class="lbl">Sea Days Min.</span></div>
+    </div>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="cf-filters">
+    <div class="cf-filter-group">
+      <label>Cruise Line</label>
+      <select id="filter-line">
+        <option value="">All Lines</option>
+        <option value="Cunard">Cunard</option>
+        <option value="P&O">P&O Cruises</option>
+        <option value="Celebrity">Celebrity</option>
+        <option value="Princess">Princess</option>
+        <option value="Norwegian">Norwegian</option>
+        <option value="Royal Caribbean">Royal Caribbean</option>
+        <option value="Carnival">Carnival</option>
+        <option value="Fred Olsen">Fred Olsen</option>
+        <option value="Ambassador">Ambassador</option>
+      </select>
+    </div>
+    <div class="cf-filter-group">
+      <label>Month</label>
+      <select id="filter-month">
+        <option value="">Any Month</option>
+        <option value="April">April</option>
+        <option value="May">May</option>
+        <option value="June">June</option>
+        <option value="July">July</option>
+        <option value="August">August</option>
+        <option value="September">September</option>
+        <option value="October">October</option>
+        <option value="November">November</option>
+        <option value="December">December</option>
+        <option value="January">January</option>
+        <option value="February">February</option>
+        <option value="March">March</option>
+      </select>
+    </div>
+    <div class="cf-filter-group">
+      <label>Duration</label>
+      <select id="filter-duration">
+        <option value="">Any Length</option>
+        <option value="short">7–10 nights</option>
+        <option value="medium">11–14 nights</option>
+        <option value="long">15+ nights</option>
+      </select>
+    </div>
+    <div class="cf-filter-group">
+      <label>Bridge</label>
+      <select id="filter-bridge">
+        <option value="">All Cruises</option>
+        <option value="hosted">Hosted Bridge Only</option>
+      </select>
+    </div>
+    <div class="cf-filter-group">
+      <label>Departure</label>
+      <select id="filter-depart">
+        <option value="">UK or Fly</option>
+        <option value="uk">UK Departure Only</option>
+        <option value="fly">Fly-Cruise Only</option>
+      </select>
+    </div>
+    <div class="cf-btn-row">
+      <button class="cf-search-btn" id="cf-search-btn">Search</button>
+      <button class="cf-reset-btn" id="cf-reset-btn">Reset</button>
+    </div>
+  </div>
+
+  <!-- RESULTS BAR -->
+  <div class="cf-results-bar">
+    <span id="results-count">Select filters and press <strong>Search</strong>, or press Search to see all cruises</span>
+    <span>All prices per person · Links open the cruise details page</span>
+  </div>
+
+  <!-- GRID -->
+  <div class="cf-grid" id="cruise-grid"></div>
+
+  <!-- JOIN BANNER -->
+  <div class="cf-join-banner">
+    <div>
+      <h3>Play bridge on your <em>next cruise</em></h3>
+      <p>Register your interest in any cruise and we'll help connect you with other Bridge at Sea members on the same sailing. Solo travellers welcome — we'll help you find a partner.</p>
+    </div>
+    <a class="cf-join-btn" href="https://bridgescorer.com/join-bridge-at-sea/">Join Free →</a>
+  </div>
+
+</div>
+
+<!-- INTEREST MODAL -->
+<div class="cf-modal-overlay" id="interest-modal">
+  <div class="cf-modal">
+    <div class="cf-modal-header">
+      <h2>Register Group Interest</h2>
+      <p>We'll be in touch when others register for the same sailing</p>
+      <button class="cf-modal-close" id="modal-close-btn">✕</button>
+    </div>
+    <div class="cf-modal-body">
+      <div class="cf-modal-cruise-name" id="modal-cruise-name">Cruise name here</div>
+      <div id="interest-form-wrap">
+        <form id="interest-form" onsubmit="submitInterest(event)">
+          <input type="hidden" id="form-cruise" name="cruise">
+          <div class="cf-form-row">
+            <div class="cf-form-group">
+              <label>First Name *</label>
+              <input type="text" name="firstName" required placeholder="Your first name">
+            </div>
+            <div class="cf-form-group">
+              <label>Last Name *</label>
+              <input type="text" name="lastName" required placeholder="Your last name">
+            </div>
+          </div>
+          <div class="cf-form-group">
+            <label>Email Address *</label>
+            <input type="email" name="email" required placeholder="your@email.com">
+          </div>
+          <div class="cf-form-group">
+            <label>Phone (optional)</label>
+            <input type="tel" name="phone" placeholder="+44 7700 000000">
+          </div>
+          <div class="cf-form-row">
+            <div class="cf-form-group">
+              <label>Number of Travellers</label>
+              <select name="travellers">
+                <option value="1">1 — Solo traveller</option>
+                <option value="2" selected>2 — Pair</option>
+                <option value="3">3</option>
+                <option value="4">4+</option>
+              </select>
+            </div>
+            <div class="cf-form-group">
+              <label>Bridge Standard</label>
+              <select name="standard">
+                <option value="Beginner">Beginner</option>
+                <option value="Improver">Improver</option>
+                <option value="Club" selected>Club player</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+          </div>
+          <div class="cf-form-group">
+            <label>Anything else? (optional)</label>
+            <textarea name="notes" placeholder="E.g. looking for partner, specific cabin needs, questions…"></textarea>
+          </div>
+          <button type="submit" class="cf-submit-btn">Register My Interest →</button>
+        </form>
+      </div>
+      <div class="cf-success-msg" id="success-msg">
+        <div class="tick">🎉</div>
+        <h3>You're registered!</h3>
+        <p>Thank you — we've noted your interest in this cruise. We'll be in touch when other Bridge at Sea members register for the same sailing.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── AWIN LINK BUILDERS ──────────────────────────────────────────────────────
+const AWIN_FO   = "http://www.awin1.com/cread.php?awinmid=5919&awinaffid=2817512&clickref=&p=";
+const AWIN_AMB  = "http://www.awin1.com/cread.php?awinmid=68716&awinaffid=2817512&clickref=&p=";
+const AWIN_C118 = "https://www.awin1.com/cread.php?awinmid=18073&awinaffid=2817512&ued=";
+
+function foUrl(path)   { return AWIN_FO  + encodeURIComponent("https://www.fredolsencruises.com" + path); }
+function ambUrl(path)  { return AWIN_AMB + encodeURIComponent("https://www.ambassadorcruiseline.com" + path); }
+function c118Url(path) { return AWIN_C118 + encodeURIComponent("https://www.cruise118.com" + path); }
+function c118Ref(ref)  { return AWIN_C118 + encodeURIComponent("https://www.cruise118.com/cruise/" + ref); }
+
+// ── CRUISE DATA ─────────────────────────────────────────────────────────────
+// fly: true = fly-cruise (not UK departure), omit or false = UK port departure
+const cruises = [
+
+  // ── CUNARD ──────────────────────────────────────────────────────────────
+  {
+    line:"Cunard", ship:"Queen Mary 2",
+    name:"Transatlantic Crossing — Southampton to New York",
+    ref:"CUNARDM611P",
+    month:"May", year:2026, nights:7, seaDays:7,
+    departure:"Southampton", destination:"New York",
+    bridge:"unhosted",
+    bridgeNote:"Seven full sea days — the classic bridge crossing. QM2's dedicated card room is a bridge institution.",
+    priceFrom:999,
+    infoUrl: c118Ref("CUNARDM611P"),
+    interestSubject:"QM2 Transatlantic May 2026"
+  },
+  {
+    line:"Cunard", ship:"Queen Mary 2",
+    name:"Transatlantic Crossing — New York to Southampton",
+    ref:"CUNARDM611T",
+    month:"June", year:2026, nights:7, seaDays:7,
+    departure:"Southampton (ends NY, fly back)",
+    destination:"New York",
+    fly:true,
+    bridge:"unhosted",
+    bridgeNote:"Seven uninterrupted sea days across the Atlantic. QM2's card room is legendary for bridge.",
+    priceFrom:999,
+    infoUrl: c118Ref("CUNARDM611T"),
+    interestSubject:"QM2 Transatlantic June 2026 (NY to Soton)"
+  },
+  {
+    line:"Cunard", ship:"Queen Mary 2",
+    name:"Transatlantic Crossing — Southampton to New York",
+    ref:"CUNARDM627B",
+    month:"October", year:2026, nights:7, seaDays:7,
+    departure:"Southampton", destination:"New York",
+    bridge:"unhosted",
+    bridgeNote:"Autumn crossing — experienced crowd, strong on-board bridge community.",
+    priceFrom:899,
+    infoUrl: c118Ref("CUNARDM627B"),
+    interestSubject:"QM2 Transatlantic October 2026"
+  },
+
+  // ── P&O ─────────────────────────────────────────────────────────────────
+  {
+    line:"P&O", ship:"Ventura",
+    name:"Canary Islands & Atlantic Islands",
+    ref:"PON633N",
+    month:"December", year:2026, nights:18, seaDays:7,
+    departure:"Southampton", destination:"Canary Islands",
+    bridge:"unhosted",
+    bridgeNote:"P&O has card rooms on most ships — active bridge on sea days.",
+    priceFrom:1114,
+    infoUrl: c118Ref("PON633N"),
+    interestSubject:"P&O Ventura Canary Islands December 2026"
+  },
+  {
+    line:"P&O", ship:"Aurora",
+    name:"Caribbean Grand Tour — No Fly, 75 Nights",
+    ref:"POR701",
+    month:"January", year:2027, nights:75, seaDays:30,
+    departure:"Southampton", destination:"Caribbean & Americas",
+    bridge:"unhosted",
+    bridgeNote:"The ultimate bridge voyage — 30+ sea days and a dedicated card room on the voyage of a lifetime.",
+    priceFrom:7759,
+    infoUrl: c118Ref("POR701"),
+    interestSubject:"P&O Aurora Caribbean Grand Tour January 2027"
+  },
+
+  // ── CELEBRITY ────────────────────────────────────────────────────────────
+  {
+    line:"Celebrity", ship:"Celebrity Apex",
+    name:"Canaries & Portugal",
+    ref:"CELEBAX11U310-260926",
+    month:"September", year:2026, nights:11, seaDays:5,
+    departure:"Southampton", destination:"Canary Islands & Portugal",
+    bridge:"unhosted",
+    bridgeNote:"Premium modern ship with excellent card facilities — great sea day bridge.",
+    priceFrom:2070,
+    infoUrl: c118Ref("CELEBAX11U310-260926"),
+    interestSubject:"Celebrity Apex Canaries September 2026"
+  },
+  {
+    line:"Celebrity", ship:"Celebrity Apex",
+    name:"Arctic Circle & Norwegian Fjords",
+    ref:"CELEBAX12U416-110726",
+    month:"July", year:2026, nights:12, seaDays:6,
+    departure:"Southampton", destination:"Norway & Arctic",
+    bridge:"unhosted",
+    bridgeNote:"12 nights with 6 sea days — ideal bridge opportunity between spectacular fjord calls.",
+    priceFrom:2411,
+    infoUrl: c118Ref("CELEBAX12U416-110726"),
+    interestSubject:"Celebrity Apex Norway July 2026"
+  },
+  {
+    line:"Celebrity", ship:"Celebrity Eclipse",
+    name:"Transatlantic — Fort Lauderdale to Southampton",
+    ref:"CELEBEC14T250-030426",
+    month:"April", year:2026, nights:14, seaDays:9,
+    departure:"Fort Lauderdale (fly out)",
+    destination:"Southampton",
+    fly:true,
+    bridge:"unhosted",
+    bridgeNote:"9 open Atlantic sea days — fly to Florida, sail home in style on Celebrity Eclipse.",
+    priceFrom:1299,
+    infoUrl: c118Ref("CELEBEC14T250-030426"),
+    interestSubject:"Celebrity Eclipse Transatlantic April 2026"
+  },
+  {
+    line:"Celebrity", ship:"Celebrity Apex",
+    name:"Transatlantic — Southampton to Port Canaveral",
+    ref:"CELEBAX13T247-181026",
+    month:"October", year:2026, nights:13, seaDays:8,
+    departure:"Southampton", destination:"Port Canaveral, Florida",
+    bridge:"unhosted",
+    bridgeNote:"8 Atlantic sea days — sail west to Florida from Southampton on Celebrity Apex.",
+    priceFrom:1599,
+    infoUrl: c118Ref("CELEBAX13T247-181026"),
+    interestSubject:"Celebrity Apex Transatlantic October 2026"
+  },
+
+  // ── PRINCESS ─────────────────────────────────────────────────────────────
+  {
+    line:"Princess", ship:"Sky Princess",
+    name:"Canary Islands Discovery",
+    ref:"PRINCESSY613",
+    month:"March", year:2026, nights:12, seaDays:5,
+    departure:"Southampton", destination:"Canary Islands",
+    bridge:"unhosted",
+    bridgeNote:"12 nights with 5 sea days — strong bridge community on Sky Princess.",
+    priceFrom:1399,
+    infoUrl: c118Ref("PRINCESSY613"),
+    interestSubject:"Princess Sky Princess Canaries March 2026"
+  },
+  {
+    line:"Princess", ship:"Sky Princess",
+    name:"Northern Europe & Mediterranean Grand Tour",
+    ref:"PRINCESSY623",
+    month:"September", year:2026, nights:28, seaDays:10,
+    departure:"Southampton", destination:"Northern Europe & Med",
+    bridge:"unhosted",
+    bridgeNote:"28 nights — Baltic, Copenhagen, Stockholm then Mediterranean — 10 sea days.",
+    priceFrom:2798,
+    infoUrl: c118Ref("PRINCESSY623"),
+    interestSubject:"Princess Sky Princess Northern Europe September 2026"
+  },
+  {
+    line:"Princess", ship:"Crown Princess",
+    name:"Transatlantic — Port Canaveral to Southampton",
+    ref:"PRINCESSCR15T201-080326",
+    month:"March", year:2026, nights:15, seaDays:10,
+    departure:"Port Canaveral (fly out)",
+    destination:"Southampton",
+    fly:true,
+    bridge:"unhosted",
+    bridgeNote:"10 sea days sailing eastbound across the Atlantic — fly to Florida, cruise home.",
+    priceFrom:1249,
+    infoUrl: c118Ref("PRINCESSCR15T201-080326"),
+    interestSubject:"Princess Crown Transatlantic March 2026"
+  },
+  {
+    line:"Princess", ship:"Regal Princess",
+    name:"Transatlantic — Southampton to Fort Lauderdale",
+    ref:"PRINCESSRG15T248-051126",
+    month:"November", year:2026, nights:15, seaDays:10,
+    departure:"Southampton", destination:"Fort Lauderdale",
+    bridge:"unhosted",
+    bridgeNote:"10 sea days heading west — Princess's card rooms are well-established bridge venues.",
+    priceFrom:1399,
+    infoUrl: c118Ref("PRINCESSRG15T248-051126"),
+    interestSubject:"Princess Regal Transatlantic November 2026"
+  },
+
+  // ── NORWEGIAN ────────────────────────────────────────────────────────────
+  {
+    line:"Norwegian", ship:"Norwegian Sky",
+    name:"Iceland, Faroe Islands & Scottish Highlands",
+    ref:"NCLSKY-20260618-10-SOU-SOU",
+    month:"June", year:2026, nights:10, seaDays:5,
+    departure:"Southampton", destination:"Iceland & Scotland",
+    bridge:"unhosted",
+    bridgeNote:"10 nights roundtrip Southampton — 5 sea days with Freestyle Cruising flexibility.",
+    priceFrom:854,
+    infoUrl: c118Ref("NCLSKY-20260618-10-SOU-SOU"),
+    interestSubject:"Norwegian Sky Iceland June 2026"
+  },
+  {
+    line:"Norwegian", ship:"Norwegian Star",
+    name:"Iceland & Arctic Circle",
+    ref:"NCLSTA-20260621-11-SOU-REY",
+    month:"June", year:2026, nights:11, seaDays:6,
+    departure:"Southampton", destination:"Reykjavik",
+    bridge:"unhosted",
+    bridgeNote:"11 nights to Reykjavik — 6 sea days ideal for bridge between dramatic port calls.",
+    priceFrom:1648,
+    infoUrl: c118Ref("NCLSTA-20260621-11-SOU-REY"),
+    interestSubject:"Norwegian Star Iceland June 2026"
+  },
+
+  // ── ROYAL CARIBBEAN ──────────────────────────────────────────────────────
+  {
+    line:"Royal Caribbean", ship:"Liberty of the Seas",
+    name:"Transatlantic — Southampton to Galveston, Texas",
+    ref:"RCILB15T245-161026",
+    month:"October", year:2026, nights:15, seaDays:10,
+    departure:"Southampton", destination:"Galveston, Texas",
+    bridge:"unhosted",
+    bridgeNote:"10 open Atlantic sea days on the newly amplified Liberty of the Seas. Excellent value transatlantic crossing.",
+    priceFrom:1244,
+    infoUrl: c118Ref("RCILB15T245-161026"),
+    interestSubject:"Royal Caribbean Liberty Transatlantic October 2026"
+  },
+  {
+    line:"Royal Caribbean", ship:"Liberty of the Seas",
+    name:"Transatlantic — Fort Lauderdale to Southampton",
+    ref:"RCILB16T214-030426",
+    month:"April", year:2026, nights:16, seaDays:10,
+    departure:"Fort Lauderdale (fly out)",
+    destination:"Southampton",
+    fly:true,
+    bridge:"unhosted",
+    bridgeNote:"16 nights repositioning west to east — fly to Florida, sail home with 10 sea days.",
+    priceFrom:1189,
+    infoUrl: c118Ref("RCILB16T214-030426"),
+    interestSubject:"Royal Caribbean Liberty Transatlantic April 2026"
+  },
+  {
+    line:"Royal Caribbean", ship:"Explorer of the Seas",
+    name:"Transatlantic — Miami to Barcelona (Fly-Cruise)",
+    ref:"RCIEX13T147-311026",
+    month:"October", year:2026, nights:13, seaDays:8,
+    departure:"Miami (fly out)",
+    destination:"Barcelona",
+    fly:true,
+    bridge:"unhosted",
+    bridgeNote:"8 Atlantic sea days — fly to Miami, cruise to Barcelona on Explorer of the Seas.",
+    priceFrom:2151,
+    infoUrl: c118Ref("RCIEX13T147-311026"),
+    interestSubject:"Royal Caribbean Explorer Transatlantic October 2026"
+  },
+
+  // ── CARNIVAL ─────────────────────────────────────────────────────────────
+  {
+    line:"Carnival", ship:"Carnival Legend",
+    name:"Transatlantic — Miami to Dover",
+    ref:"CARNIVALLE2405202614",
+    month:"May", year:2026, nights:14, seaDays:9,
+    departure:"Miami (fly out)",
+    destination:"Dover",
+    fly:true,
+    bridge:"unhosted",
+    bridgeNote:"9 Atlantic sea days — excellent value transatlantic, fly to Miami and cruise home to Dover.",
+    priceFrom:857,
+    infoUrl: c118Ref("CARNIVALLE2405202614"),
+    interestSubject:"Carnival Legend Transatlantic May 2026"
+  },
+
+  // ── FRED OLSEN ───────────────────────────────────────────────────────────
+  {
+    line:"Fred Olsen", ship:"Balmoral",
+    name:"Scenic Waterways and Cities of Scandinavia",
+    month:"May", year:2026, nights:9, seaDays:6,
+    departure:"Newcastle", destination:"Scandinavia",
+    bridge:"hosted",
+    bridgeNote:"Hosted bridge programme with daily sessions and tutored seminars on board.",
+    priceFrom:1329,
+    infoUrl: foUrl("/cruise/scandinavia-l2614"),
+    interestSubject:"Fred Olsen Scandinavia May 2026 (L2614)"
+  },
+  {
+    line:"Fred Olsen", ship:"Balmoral",
+    name:"Scenic Coastlines of the British Isles",
+    month:"August", year:2026, nights:9, seaDays:7,
+    departure:"Newcastle", destination:"British Isles",
+    bridge:"hosted",
+    bridgeNote:"Hosted bridge programme with daily sessions and seminars on board.",
+    priceFrom:1209,
+    infoUrl: foUrl("/cruise/scenic-scotland-t2610"),
+    interestSubject:"Fred Olsen British Isles August 2026 (L2627)"
+  },
+  {
+    line:"Fred Olsen", ship:"Balmoral",
+    name:"Canary Islands and Madeira Winter Warmth",
+    month:"January", year:2027, nights:14, seaDays:8,
+    departure:"Southampton", destination:"Canary Islands",
+    bridge:"hosted",
+    bridgeNote:"Hosted bridge programme on board — Fred Olsen's most popular bridge sailing.",
+    priceFrom:1349,
+    infoUrl: foUrl("/cruise/canary-islands-l2701"),
+    interestSubject:"Fred Olsen Canary Islands January 2027 (L2701)"
+  },
+  {
+    line:"Fred Olsen", ship:"Balmoral",
+    name:"A Taste of Spain and Portugal",
+    month:"March", year:2027, nights:11, seaDays:7,
+    departure:"Southampton", destination:"Spain & Portugal",
+    bridge:"hosted",
+    bridgeNote:"Hosted bridge programme — daily sessions and tutored seminars on board.",
+    priceFrom:1099,
+    infoUrl: foUrl("/cruise/spain-portugal-l2706"),
+    interestSubject:"Fred Olsen Spain Portugal March 2027 (L2706)"
+  },
+
+  // ── AMBASSADOR ───────────────────────────────────────────────────────────
+  {
+    line:"Ambassador", ship:"Ambience",
+    name:"Canary Islands Winter Escape",
+    month:"November", year:2026, nights:14, seaDays:7,
+    departure:"Tilbury", destination:"Canary Islands",
+    bridge:"unhosted",
+    bridgeNote:"Ambience has a well-appointed card room — strong bridge community on longer voyages.",
+    priceFrom:999,
+    infoUrl: ambUrl("/destinations/canary-islands/"),
+    interestSubject:"Ambassador Canary Islands November 2026"
+  },
+  {
+    line:"Ambassador", ship:"Ambition",
+    name:"Spain, Portugal & Atlantic Islands",
+    month:"March", year:2027, nights:14, seaDays:6,
+    departure:"Liverpool", destination:"Spain & Portugal",
+    bridge:"unhosted",
+    bridgeNote:"No-fly from Liverpool — Ambition has 7 bridge tables, ideal for a dedicated group.",
+    priceFrom:849,
+    infoUrl: ambUrl("/no-fly-cruises/cruises-from-liverpool/"),
+    interestSubject:"Ambassador Spain Portugal March 2027"
+  }
+
+]; // ── END CRUISE DATA ──────────────────────────────────────────
+
+// ── HELPERS ─────────────────────────────────────────────────────────────────
+function getDurationCategory(n) {
+  if (n <= 10) return 'short';
+  if (n <= 14) return 'medium';
+  return 'long';
+}
+
+function getBookLabel(line) {
+  if (line === 'Fred Olsen') return 'Fred Olsen';
+  if (line === 'Ambassador') return 'Ambassador Cruise Line';
+  return 'Cruise118';
+}
+
+function isReady(c) {
+  if (c.seaDays < 5) return false;
+  const c118Lines = ['Cunard','P&O','Celebrity','Princess','Norwegian','Royal Caribbean','Carnival'];
+  if (c118Lines.includes(c.line)) return !!c.ref;
+  return (c.line === 'Fred Olsen' || c.line === 'Ambassador');
+}
+
+function readyCruises() {
+  return cruises.filter(isReady);
+}
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+function renderCards(list) {
+  const grid = document.getElementById('cruise-grid');
+  const countEl = document.getElementById('results-count');
+  countEl.innerHTML = '<strong>' + list.length + '</strong> cruise' + (list.length !== 1 ? 's' : '') + ' found';
+
+  if (list.length === 0) {
+    grid.innerHTML =
+      '<div class="cf-no-results">' +
+        '<h3>No cruises match your filters</h3>' +
+        '<p style="margin-top:8px">Try adjusting your filters, or <a href="#" onclick="resetFilters();return false;" style="color:#c8aa5a;font-weight:700;">reset all filters</a> to see every cruise.</p>' +
+      '</div>';
+    return;
+  }
+
+  grid.innerHTML = list.map(function(c) {
+    var flyBadge = c.fly
+      ? '<span class="cf-fly-badge">✈ Fly-Cruise</span>'
+      : '';
+    var refNote = c.ref
+      ? '<span class="cf-ref">Ref: ' + c.ref + '</span>'
+      : '';
+    var depIcon = c.fly ? '✈' : '🚢';
+
+    return (
+      '<div class="cf-card">' +
+        '<div class="cf-card-header">' +
+          '<div class="cf-card-line">' + c.line + ' · ' + c.ship + '</div>' +
+          '<div class="cf-card-name">' + c.name + '</div>' +
+          '<span class="cf-card-badge ' + (c.bridge === 'hosted' ? 'cf-badge-hosted' : 'cf-badge-unhosted') + '">' +
+            (c.bridge === 'hosted' ? '🃏 Hosted Bridge' : 'Bridge Friendly') +
+          '</span>' +
+        '</div>' +
+        '<div class="cf-card-body">' +
+          '<div class="cf-detail"><span class="cf-detail-icon">📅</span><span><strong>' + c.month + ' ' + c.year + '</strong> · ' + c.nights + ' nights</span></div>' +
+          '<div class="cf-detail"><span class="cf-detail-icon">' + depIcon + '</span><span>Departing <strong>' + c.departure + '</strong> → ' + c.destination + '</span></div>' +
+          '<div class="cf-detail"><span class="cf-detail-icon">🎯</span><span>' + c.bridgeNote + '</span></div>' +
+          '<div>' +
+            '<span class="cf-sea-days-badge">🌊 ' + c.seaDays + '+ sea days</span>' +
+            flyBadge +
+          '</div>' +
+        '</div>' +
+        '<div class="cf-card-price">' +
+          '<span class="cf-price-from">from</span>' +
+          '<span class="cf-price-amount">£' + c.priceFrom.toLocaleString() + '</span>' +
+          '<span class="cf-price-pp">pp</span>' +
+          refNote +
+        '</div>' +
+        '<div class="cf-card-footer">' +
+          '<a class="cf-info-btn" href="' + c.infoUrl + '" target="_blank" rel="noopener">More Information →</a>' +
+          '<a class="cf-book-btn" href="' + c.infoUrl + '" target="_blank" rel="noopener">Book via ' + getBookLabel(c.line) + ' →</a>' +
+          '<button class="cf-interest-btn" onclick="openInterest(' + JSON.stringify(c.interestSubject) + ')">Register Group Interest</button>' +
+        '</div>' +
+      '</div>'
+    );
+  }).join('');
+}
+
+// ── FILTER ───────────────────────────────────────────────────────────────────
+function applyFilters() {
+  var line     = document.getElementById('filter-line').value;
+  var month    = document.getElementById('filter-month').value;
+  var duration = document.getElementById('filter-duration').value;
+  var bridge   = document.getElementById('filter-bridge').value;
+  var depart   = document.getElementById('filter-depart').value;
+
+  var filtered = readyCruises().filter(function(c) {
+    if (line     && c.line   !== line)                       return false;
+    if (month    && c.month  !== month)                      return false;
+    if (duration && getDurationCategory(c.nights) !== duration) return false;
+    if (bridge   && c.bridge !== bridge)                     return false;
+    if (depart === 'uk'  && c.fly)                           return false;
+    if (depart === 'fly' && !c.fly)                          return false;
+    return true;
+  });
+
+  renderCards(filtered);
+}
+
+function resetFilters() {
+  ['filter-line','filter-month','filter-duration','filter-bridge','filter-depart']
+    .forEach(function(id) { document.getElementById(id).value = ''; });
+  document.getElementById('cruise-grid').innerHTML = '';
+  document.getElementById('results-count').innerHTML =
+    'Select filters and press <strong>Search</strong>, or press Search to see all cruises';
+}
+
+// ── INTEREST MODAL ───────────────────────────────────────────────────────────
+function openInterest(cruiseName) {
+  document.getElementById('modal-cruise-name').textContent = cruiseName;
+  document.getElementById('form-cruise').value = cruiseName;
+  document.getElementById('interest-form').reset();
+  document.getElementById('interest-form-wrap').style.display = 'block';
+  document.getElementById('success-msg').style.display = 'none';
+  document.getElementById('interest-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('interest-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Submit — posts to a Google Form or falls back to mailto
+function submitInterest(e) {
+  e.preventDefault();
+  var form = e.target;
+  var data = {
+    cruise:     form.cruise.value,
+    firstName:  form.firstName.value,
+    lastName:   form.lastName.value,
+    email:      form.email.value,
+    phone:      form.phone.value,
+    travellers: form.travellers.value,
+    standard:   form.standard.value,
+    notes:      form.notes.value
+  };
+
+  // Build mailto as the reliable delivery method
+  var subject = encodeURIComponent('Bridge Group Interest — ' + data.cruise);
+  var body = encodeURIComponent(
+    'Name: ' + data.firstName + ' ' + data.lastName + '\n' +
+    'Email: ' + data.email + '\n' +
+    'Phone: ' + (data.phone || 'not provided') + '\n' +
+    'Travellers: ' + data.travellers + '\n' +
+    'Standard: ' + data.standard + '\n' +
+    'Cruise: ' + data.cruise + '\n' +
+    'Notes: ' + (data.notes || 'none')
+  );
+
+  // Open mailto silently in background (won't always fire from iframe)
+  var mailLink = 'mailto:admin@bridgescorer.com?subject=' + subject + '&body=' + body;
+
+  // Show success regardless
+  document.getElementById('interest-form-wrap').style.display = 'none';
+  document.getElementById('success-msg').style.display = 'block';
+
+  // Attempt mailto open
+  try { window.open(mailLink, '_self'); } catch(err) {}
+
+  // Auto-close modal after 3s
+  setTimeout(closeModal, 3000);
+}
+
+// ── INIT ─────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  // Wire up buttons
+  document.getElementById('cf-search-btn').addEventListener('click', applyFilters);
+  document.getElementById('cf-reset-btn').addEventListener('click', resetFilters);
+  document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+  document.getElementById('interest-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // Update hero stat
+  var total = readyCruises().length;
+  document.getElementById('stat-cruises').textContent = total;
+
+  // Show all cruises on load
+  renderCards(readyCruises());
+  document.getElementById('results-count').innerHTML =
+    'Showing all <strong>' + total + '</strong> cruises — use filters to narrow your search';
+});
+</script>
+</body>
+</html>
