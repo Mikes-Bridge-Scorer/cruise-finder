@@ -844,32 +844,6 @@ const cruises = [
     infoUrl: c118Ref("PRINCESSY623"),
     interestSubject:"Princess Sky Princess Northern Europe September 2026"
   },
-  {
-    line:"Princess", ship:"Sky Princess",
-    name:"Transatlantic — Port Canaveral to Southampton",
-    ref:"PRINCESSSKY15T208-080326",
-    month:"March", year:2026, nights:15, seaDays:10,
-    departure:"Port Canaveral (fly out)",
-    destination:"Southampton",
-    fly:true,
-    bridge:"unhosted",
-    bridgeNote:"10 sea days sailing east via Azores, Casablanca & La Coruña — fly to Florida, cruise home.",
-    priceFrom:1249,
-    infoUrl: c118Url("/cruise-line/princess-cruises/transatlantic"),
-    interestSubject:"Princess Sky Princess Transatlantic March 2026"
-  },
-  {
-    line:"Princess", ship:"Sky Princess",
-    name:"Transatlantic — Southampton to Port Canaveral",
-    ref:"PRINCESSSKY15T248-051126",
-    month:"November", year:2026, nights:15, seaDays:10,
-    departure:"Southampton", destination:"Port Canaveral, Florida",
-    bridge:"unhosted",
-    bridgeNote:"10 sea days heading west via Cherbourg, Vigo, Madeira & Tenerife — sail from Southampton.",
-    priceFrom:1399,
-    infoUrl: c118Url("/cruise-line/princess-cruises/transatlantic"),
-    interestSubject:"Princess Sky Princess Transatlantic November 2026"
-  },
 
   // ── NORWEGIAN ────────────────────────────────────────────────────────────
   {
@@ -1043,7 +1017,6 @@ function getBookLabel(line) {
 function isReady(c) {
   if (c.seaDays < 5) return false;
   if (c.line === 'Fred Olsen' || c.line === 'Ambassador') return true;
-  if (c.line === 'Princess' && c.fly && !c.ref) return true;
   return !!c.ref;
 }
 
