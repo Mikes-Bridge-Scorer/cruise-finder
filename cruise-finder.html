@@ -503,6 +503,84 @@ body {
   .cf-form-row { grid-template-columns: 1fr; }
   .hero-stats { gap: 20px; }
 }
+
+/* ── SOFT PROMPT MODAL ──────────────────────────────────────── */
+.sp-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,22,40,0.78);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.sp-overlay.open { display: flex; }
+.sp-box {
+  background: white;
+  border-radius: 10px;
+  max-width: 460px;
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  animation: modalIn 0.22s ease;
+}
+.sp-header {
+  background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 100%);
+  padding: 20px 24px 16px;
+  position: relative;
+}
+.sp-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: #f0e8d0;
+  margin-bottom: 4px;
+}
+.sp-header p { font-size: 0.82rem; color: #a09880; line-height: 1.5; }
+.sp-cruise-name {
+  background: #f8f4ec;
+  border-left: 3px solid #c8aa5a;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: #0a1628;
+  font-weight: 600;
+  margin: 16px 24px 0;
+  border-radius: 0 4px 4px 0;
+}
+.sp-body { padding: 16px 24px 24px; }
+.sp-body p { font-size: 0.88rem; color: #555; line-height: 1.55; margin-bottom: 16px; }
+.sp-btn-register {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: #c8aa5a;
+  color: #0a1628;
+  border: none;
+  border-radius: 5px;
+  font-family: Lato, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background 0.18s;
+}
+.sp-btn-register:hover { background: #d4b86a; }
+.sp-btn-continue {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  background: white;
+  color: #0a1628;
+  border: 1.5px solid #e0d8c4;
+  border-radius: 5px;
+  font-family: Lato, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.sp-btn-continue:hover { background: #f8f4ec; }
+.sp-skip { text-align: center; margin-top: 10px; font-size: 0.78rem; color: #bbb; }
 </style>
 </head>
 <body>
@@ -605,69 +683,19 @@ body {
 
 </div>
 
-<!-- INTEREST MODAL -->
-<div class="cf-modal-overlay" id="interest-modal">
-  <div class="cf-modal">
-    <div class="cf-modal-header">
-      <h2>Register Group Interest</h2>
-      <p>We'll be in touch when others register for the same sailing</p>
-      <button class="cf-modal-close" id="modal-close-btn">✕</button>
+<!-- SOFT PROMPT MODAL -->
+<div class="sp-overlay" id="sp-modal">
+  <div class="sp-box">
+    <div class="sp-header">
+      <h3>Before you go — join the group!</h3>
+      <p>Register your interest and we'll connect you with other bridge players on this sailing.</p>
     </div>
-    <div class="cf-modal-body">
-      <div class="cf-modal-cruise-name" id="modal-cruise-name">Cruise name here</div>
-      <div id="interest-form-wrap">
-        <form id="interest-form" onsubmit="submitInterest(event)">
-          <input type="hidden" id="form-cruise" name="cruise">
-          <div class="cf-form-row">
-            <div class="cf-form-group">
-              <label>First Name *</label>
-              <input type="text" name="firstName" required placeholder="Your first name">
-            </div>
-            <div class="cf-form-group">
-              <label>Last Name *</label>
-              <input type="text" name="lastName" required placeholder="Your last name">
-            </div>
-          </div>
-          <div class="cf-form-group">
-            <label>Email Address *</label>
-            <input type="email" name="email" required placeholder="your@email.com">
-          </div>
-          <div class="cf-form-group">
-            <label>Phone (optional)</label>
-            <input type="tel" name="phone" placeholder="+44 7700 000000">
-          </div>
-          <div class="cf-form-row">
-            <div class="cf-form-group">
-              <label>Number of Travellers</label>
-              <select name="travellers">
-                <option value="1">1 — Solo traveller</option>
-                <option value="2" selected>2 — Pair</option>
-                <option value="3">3</option>
-                <option value="4">4+</option>
-              </select>
-            </div>
-            <div class="cf-form-group">
-              <label>Bridge Standard</label>
-              <select name="standard">
-                <option value="Beginner">Beginner</option>
-                <option value="Improver">Improver</option>
-                <option value="Club" selected>Club player</option>
-                <option value="Advanced">Advanced</option>
-              </select>
-            </div>
-          </div>
-          <div class="cf-form-group">
-            <label>Anything else? (optional)</label>
-            <textarea name="notes" placeholder="E.g. looking for partner, specific cabin needs, questions…"></textarea>
-          </div>
-          <button type="submit" class="cf-submit-btn">Register My Interest →</button>
-        </form>
-      </div>
-      <div class="cf-success-msg" id="success-msg">
-        <div class="tick">🎉</div>
-        <h3>You're registered!</h3>
-        <p>Thank you — we've noted your interest in this cruise. We'll be in touch when other Bridge at Sea members register for the same sailing.</p>
-      </div>
+    <div class="sp-cruise-name" id="sp-cruise-name"></div>
+    <div class="sp-body">
+      <p>It takes 30 seconds — and if enough players register, we'll help organise a Bridge at Sea group on this cruise. Solo travellers welcome.</p>
+      <button class="sp-btn-register" id="sp-btn-register">Register My Interest First →</button>
+      <button class="sp-btn-continue" id="sp-btn-continue">Continue to cruise details</button>
+      <div class="sp-skip">You can also register later using the button on the card</div>
     </div>
   </div>
 </div>
@@ -1073,9 +1101,9 @@ function renderCards(list) {
           refNote +
         '</div>' +
         '<div class="cf-card-footer">' +
-          '<a class="cf-info-btn" href="' + c.infoUrl + '" target="_blank" rel="noopener">More Information →</a>' +
-          '<a class="cf-book-btn" href="' + c.infoUrl + '" target="_blank" rel="noopener">Book via ' + getBookLabel(c.line) + ' →</a>' +
-          '<button class="cf-interest-btn" onclick="openInterest(' + JSON.stringify(c.interestSubject) + ')">Register Group Interest</button>' +
+          '<button class="cf-interest-btn" onclick="openInterest(' + JSON.stringify(c.interestSubject) + ')">🃏 Register Group Interest</button>' +
+          '<button class="cf-info-btn" style="background:white;border:1.5px solid #c8aa5a;color:#0a1628;cursor:pointer;font-family:Lato,sans-serif;" onclick="softPrompt(' + JSON.stringify(c.interestSubject) + ',' + JSON.stringify(c.infoUrl) + ')">More Information →</button>' +
+          '<button class="cf-book-btn" style="cursor:pointer;font-family:Lato,sans-serif;" onclick="softPrompt(' + JSON.stringify(c.interestSubject) + ',' + JSON.stringify(c.infoUrl) + ')">Book via ' + getBookLabel(c.line) + ' →</button>' +
         '</div>' +
       '</div>'
     );
@@ -1111,20 +1139,49 @@ function resetFilters() {
     'Select filters and press <strong>Search</strong>, or press Search to see all cruises';
 }
 
-// ── INTEREST — opens Google Form in new tab ─────────────────────────────────
+// ── GOOGLE FORM ─────────────────────────────────────────────────────────────
 var GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf2WkDMVTfTmN7sCACBHiT5u1BpF9o7t8VOlAUj4jCqaLCdDA/viewform';
 
+// Direct Register Interest button — straight to Google Form
 function openInterest(cruiseName) {
   window.open(GOOGLE_FORM_URL, '_blank');
 }
 
-function closeModal() {}
+// ── SOFT PROMPT — fires when clicking More Info or Book ──────────────────────
+var _pendingUrl = '';
+
+function softPrompt(cruiseName, destUrl) {
+  _pendingUrl = destUrl;
+  document.getElementById('sp-cruise-name').textContent = cruiseName;
+  document.getElementById('sp-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSoftPrompt() {
+  document.getElementById('sp-modal').classList.remove('open');
+  document.body.style.overflow = '';
+  _pendingUrl = '';
+}
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   // Wire up buttons
   document.getElementById('cf-search-btn').addEventListener('click', applyFilters);
   document.getElementById('cf-reset-btn').addEventListener('click', resetFilters);
+  // Wire soft prompt buttons
+  document.getElementById('sp-btn-register').addEventListener('click', function() {
+    closeSoftPrompt();
+    window.open(GOOGLE_FORM_URL, '_blank');
+  });
+  document.getElementById('sp-btn-continue').addEventListener('click', function() {
+    var url = _pendingUrl;
+    closeSoftPrompt();
+    window.open(url, '_blank');
+  });
+  document.getElementById('sp-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeSoftPrompt();
+  });
+
   // Update hero stat
   var total = readyCruises().length;
   document.getElementById('stat-cruises').textContent = total;
