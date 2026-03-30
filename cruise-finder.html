@@ -779,17 +779,31 @@ const cruises = [
     interestSubject:"Celebrity Apex Norway July 2026"
   },
   {
-    line:"Celebrity", ship:"Celebrity Eclipse",
-    name:"Transatlantic — Fort Lauderdale to Southampton",
-    ref:"CELEBEC14T250-030426",
-    month:"April", year:2026, nights:14, seaDays:9,
-    departure:"Fort Lauderdale (fly out)",
+    line:"Celebrity", ship:"Celebrity Apex",
+    name:"Transatlantic — Port Canaveral to Southampton",
+    ref:"CELEBAX13T144-250426",
+    month:"April", year:2026, nights:13, seaDays:8,
+    departure:"Port Canaveral (fly out)",
     destination:"Southampton",
     fly:true,
     bridge:"unhosted",
-    bridgeNote:"9 open Atlantic sea days — fly to Florida, sail home in style on Celebrity Eclipse.",
-    priceFrom:1299,
-    infoUrl: c118Ref("CELEBEC14T250-030426"),
+    bridgeNote:"8 Atlantic sea days — fly to Florida, sail home via Bermuda & Azores on Celebrity Apex.",
+    priceFrom:1011,
+    infoUrl: c118Ref("CELEBAX13T144-250426"),
+    interestSubject:"Celebrity Apex Transatlantic April 2026"
+  },
+  {
+    line:"Celebrity", ship:"Celebrity Eclipse",
+    name:"Transatlantic — Fort Lauderdale to Amsterdam",
+    ref:"CELEBEC14T250-250426",
+    month:"April", year:2026, nights:14, seaDays:9,
+    departure:"Fort Lauderdale (fly out)",
+    destination:"Amsterdam",
+    fly:true,
+    bridge:"unhosted",
+    bridgeNote:"9 open Atlantic sea days via Funchal and La Coruña — fly out, cruise home.",
+    priceFrom:1774,
+    infoUrl: c118Ref("CELEBEC14T250-250426"),
     interestSubject:"Celebrity Eclipse Transatlantic April 2026"
   },
   {
@@ -799,8 +813,8 @@ const cruises = [
     month:"October", year:2026, nights:13, seaDays:8,
     departure:"Southampton", destination:"Port Canaveral, Florida",
     bridge:"unhosted",
-    bridgeNote:"8 Atlantic sea days — sail west to Florida from Southampton on Celebrity Apex.",
-    priceFrom:1599,
+    bridgeNote:"8 Atlantic sea days via Vigo, Lisbon, Azores & Bermuda — sail west from Southampton.",
+    priceFrom:1541,
     infoUrl: c118Ref("CELEBAX13T247-181026"),
     interestSubject:"Celebrity Apex Transatlantic October 2026"
   },
@@ -831,30 +845,30 @@ const cruises = [
     interestSubject:"Princess Sky Princess Northern Europe September 2026"
   },
   {
-    line:"Princess", ship:"Crown Princess",
+    line:"Princess", ship:"Sky Princess",
     name:"Transatlantic — Port Canaveral to Southampton",
-    ref:"PRINCESSCR15T201-080326",
+    ref:"PRINCESSSKY15T208-080326",
     month:"March", year:2026, nights:15, seaDays:10,
     departure:"Port Canaveral (fly out)",
     destination:"Southampton",
     fly:true,
     bridge:"unhosted",
-    bridgeNote:"10 sea days sailing eastbound across the Atlantic — fly to Florida, cruise home.",
+    bridgeNote:"10 sea days sailing east via Azores, Casablanca & La Coruña — fly to Florida, cruise home.",
     priceFrom:1249,
-    infoUrl: c118Ref("PRINCESSCR15T201-080326"),
-    interestSubject:"Princess Crown Transatlantic March 2026"
+    infoUrl: c118Url("/cruise-line/princess-cruises/transatlantic"),
+    interestSubject:"Princess Sky Princess Transatlantic March 2026"
   },
   {
-    line:"Princess", ship:"Regal Princess",
-    name:"Transatlantic — Southampton to Fort Lauderdale",
-    ref:"PRINCESSRG15T248-051126",
+    line:"Princess", ship:"Sky Princess",
+    name:"Transatlantic — Southampton to Port Canaveral",
+    ref:"PRINCESSSKY15T248-051126",
     month:"November", year:2026, nights:15, seaDays:10,
-    departure:"Southampton", destination:"Fort Lauderdale",
+    departure:"Southampton", destination:"Port Canaveral, Florida",
     bridge:"unhosted",
-    bridgeNote:"10 sea days heading west — Princess's card rooms are well-established bridge venues.",
+    bridgeNote:"10 sea days heading west via Cherbourg, Vigo, Madeira & Tenerife — sail from Southampton.",
     priceFrom:1399,
-    infoUrl: c118Ref("PRINCESSRG15T248-051126"),
-    interestSubject:"Princess Regal Transatlantic November 2026"
+    infoUrl: c118Url("/cruise-line/princess-cruises/transatlantic"),
+    interestSubject:"Princess Sky Princess Transatlantic November 2026"
   },
 
   // ── NORWEGIAN ────────────────────────────────────────────────────────────
@@ -1028,9 +1042,9 @@ function getBookLabel(line) {
 
 function isReady(c) {
   if (c.seaDays < 5) return false;
-  const c118Lines = ['Cunard','P&O','Celebrity','Princess','Norwegian','Royal Caribbean','Carnival'];
-  if (c118Lines.includes(c.line)) return !!c.ref;
-  return (c.line === 'Fred Olsen' || c.line === 'Ambassador');
+  if (c.line === 'Fred Olsen' || c.line === 'Ambassador') return true;
+  if (c.line === 'Princess' && c.fly && !c.ref) return true;
+  return !!c.ref;
 }
 
 function readyCruises() {
