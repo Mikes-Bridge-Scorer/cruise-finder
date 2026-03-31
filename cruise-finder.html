@@ -1101,7 +1101,7 @@ function renderCards(list) {
           refNote +
         '</div>' +
         '<div class="cf-card-footer">' +
-          '<a class="cf-interest-btn" href="#" onclick="openInterest(' + JSON.stringify(c.interestSubject) + ');return false;">🃏 Register Group Interest</a>' +
+          '<a class="cf-interest-btn" href="' + GOOGLE_FORM_BASE + encodeURIComponent(c.interestSubject) + '" target="_blank" rel="noopener">🃏 Register Group Interest</a>' +
           '<a class="cf-info-btn sp-trigger" href="' + c.infoUrl + '" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '">More Information →</a>' +
           '<a class="cf-book-btn sp-trigger" href="' + c.infoUrl + '" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '">Book via ' + getBookLabel(c.line) + ' →</a>' +
         '</div>' +
@@ -1183,14 +1183,24 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.target === this) closeSoftPrompt();
   });
 
-  // Event delegation for soft-prompt triggers on cards
+  // Event delegation for all card triggers
   document.getElementById('cruise-grid').addEventListener('click', function(e) {
-    var trigger = e.target.closest('.sp-trigger');
-    if (trigger) {
+    // Soft prompt (More Info / Book buttons)
+    var spTrigger = e.target.closest('.sp-trigger');
+    if (spTrigger) {
       e.preventDefault();
-      var cruise = trigger.getAttribute('data-cruise');
-      var url    = trigger.getAttribute('data-url');
+      var cruise = spTrigger.getAttribute('data-cruise');
+      var url    = spTrigger.getAttribute('data-url');
       softPrompt(cruise, url);
+      return;
+    }
+    // Direct interest registration button
+    var interestTrigger = e.target.closest('.interest-trigger');
+    if (interestTrigger) {
+      e.preventDefault();
+      var cruise = interestTrigger.getAttribute('data-cruise');
+      window.open(GOOGLE_FORM_BASE + encodeURIComponent(cruise), '_blank');
+      return;
     }
   });
 
