@@ -1101,7 +1101,7 @@ function renderCards(list) {
           refNote +
         '</div>' +
         '<div class="cf-card-footer">' +
-          '<a class="cf-interest-btn" href="' + GOOGLE_FORM_URL + '" target="_blank" rel="noopener">🃏 Register Group Interest</a>' +
+          '<a class="cf-interest-btn" href="#" onclick="openInterest(' + JSON.stringify(c.interestSubject) + ');return false;">🃏 Register Group Interest</a>' +
           '<a class="cf-info-btn sp-trigger" href="' + c.infoUrl + '" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '">More Information →</a>' +
           '<a class="cf-book-btn sp-trigger" href="' + c.infoUrl + '" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '">Book via ' + getBookLabel(c.line) + ' →</a>' +
         '</div>' +
@@ -1140,11 +1140,11 @@ function resetFilters() {
 }
 
 // ── GOOGLE FORM ─────────────────────────────────────────────────────────────
-var GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSf2WkDMVTfTmN7sCACBHiT5u1BpF9o7t8VOlAUj4jCqaLCdDA/viewform';
+var GOOGLE_FORM_BASE = 'https://docs.google.com/forms/d/e/1FAIpQLSf2WkDMVTfTmN7sCACBHiT5u1BpF9o7t8VOlAUj4jCqaLCdDA/viewform?usp=pp_url&entry.275018667=';
 
-// Direct Register Interest button — straight to Google Form
+// Direct Register Interest button — opens Google Form with cruise pre-filled
 function openInterest(cruiseName) {
-  window.open(GOOGLE_FORM_URL, '_blank');
+  window.open(GOOGLE_FORM_BASE + encodeURIComponent(cruiseName), '_blank');
 }
 
 // ── SOFT PROMPT — fires when clicking More Info or Book ──────────────────────
@@ -1170,8 +1170,9 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('cf-reset-btn').addEventListener('click', resetFilters);
   // Wire soft prompt modal buttons
   document.getElementById('sp-btn-register').addEventListener('click', function() {
+    var cruise = document.getElementById('sp-cruise-name').textContent;
     closeSoftPrompt();
-    window.open(GOOGLE_FORM_URL, '_blank');
+    window.open(GOOGLE_FORM_BASE + encodeURIComponent(cruise), '_blank');
   });
   document.getElementById('sp-btn-continue').addEventListener('click', function() {
     var url = _pendingUrl;
