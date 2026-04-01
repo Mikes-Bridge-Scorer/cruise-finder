@@ -511,15 +511,13 @@ html, body { height: 100%; }
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
   width: 100%;
   height: 100%;
   background: rgba(10,22,40,0.78);
   z-index: 99999;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 60px 20px 20px;
+  padding: 20px;
   overflow-y: auto;
 }
 .sp-overlay.open { display: flex; }
@@ -692,7 +690,7 @@ html, body { height: 100%; }
 
 <!-- SOFT PROMPT MODAL -->
 <div class="sp-overlay" id="sp-modal">
-  <div class="sp-box">
+  <div class="sp-box" id="sp-box">
     <div class="sp-header">
       <h3>Before you go — join the group!</h3>
       <p>Register your interest and we'll connect you with other bridge players on this sailing.</p>
@@ -792,13 +790,13 @@ const cruises = [
   {
     line:"Celebrity", ship:"Celebrity Apex",
     name:"Canaries & Portugal",
-    ref:"CELEBAX11U310-260926",
+    ref:"CELEBAX11U145-260926",
     month:"September", year:2026, nights:11, seaDays:5,
     departure:"Southampton", destination:"Canary Islands & Portugal",
     bridge:"unhosted",
     bridgeNote:"Premium modern ship with excellent card facilities — great sea day bridge.",
     priceFrom:2070,
-    infoUrl: c118Ref("CELEBAX11U310-260926"),
+    infoUrl: c118Ref("CELEBAX11U145-260926"),
     interestSubject:"Celebrity Apex Canaries September 2026"
   },
   {
@@ -850,7 +848,7 @@ const cruises = [
     bridge:"unhosted",
     bridgeNote:"8 Atlantic sea days via Vigo, Lisbon, Azores & Bermuda — sail west from Southampton.",
     priceFrom:1541,
-    infoUrl: c118Ref("CELEBAX13T247-181026"),
+    infoUrl: c118Url("/cruise-line/celebrity-cruises/transatlantic"),
     interestSubject:"Celebrity Apex Transatlantic October 2026"
   },
 
@@ -1161,8 +1159,11 @@ function softPrompt(cruiseName, destUrl) {
   _pendingUrl = destUrl;
   document.getElementById('sp-cruise-name').textContent = cruiseName;
   document.getElementById('sp-modal').classList.add('open');
-  document.getElementById('sp-modal').scrollTop = 0;
-  window.scrollTo(0, 0);
+  // Scroll the modal box into view wherever the user is on the page
+  setTimeout(function() {
+    var box = document.getElementById('sp-box');
+    if (box) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 50);
 }
 
 function closeSoftPrompt() {
