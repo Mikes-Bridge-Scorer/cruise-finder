@@ -723,18 +723,6 @@ const cruises = [
   // ── CUNARD ──────────────────────────────────────────────────────────────
   {
     line:"Cunard", ship:"Queen Mary 2",
-    name:"Transatlantic Crossing — Southampton to New York",
-    ref:"CUNARDM611P",
-    month:"May", year:2026, nights:7, seaDays:7,
-    departure:"Southampton", destination:"New York",
-    bridge:"unhosted",
-    bridgeNote:"Seven full sea days — the classic bridge crossing. QM2's dedicated card room is a bridge institution.",
-    priceFrom:999,
-    infoUrl: c118Ref("CUNARDM611P"),
-    interestSubject:"QM2 Transatlantic May 2026"
-  },
-  {
-    line:"Cunard", ship:"Queen Mary 2",
     name:"Transatlantic Crossing — New York to Southampton",
     ref:"CUNARDM611T",
     month:"June", year:2026, nights:7, seaDays:7,
@@ -758,6 +746,19 @@ const cruises = [
     priceFrom:899,
     infoUrl: c118Ref("CUNARDM627B"),
     interestSubject:"QM2 Transatlantic October 2026"
+  },
+  // ── CUNARD NEW ───────────────────────────────────────────────────────────
+  {
+    line:"Cunard", ship:"Queen Mary 2",
+    name:"Transatlantic Crossing — Southampton to New York",
+    ref:"CUNARDM616",
+    month:"July", year:2026, nights:7, seaDays:7,
+    departure:"Southampton", destination:"New York",
+    bridge:"unhosted",
+    bridgeNote:"Seven full sea days — QM2's dedicated card room is a bridge institution. Abbey Road themed event voyage.",
+    priceFrom:2036,
+    infoUrl: c118Ref("CUNARDM616"),
+    interestSubject:"QM2 Transatlantic July 2026"
   },
 
   // ── P&O ─────────────────────────────────────────────────────────────────
@@ -813,34 +814,6 @@ const cruises = [
   },
   {
     line:"Celebrity", ship:"Celebrity Apex",
-    name:"Transatlantic — Port Canaveral to Southampton",
-    ref:"CELEBAX13T144-250426",
-    month:"April", year:2026, nights:13, seaDays:8,
-    departure:"Port Canaveral (fly out)",
-    destination:"Southampton",
-    fly:true,
-    bridge:"unhosted",
-    bridgeNote:"8 Atlantic sea days — fly to Florida, sail home via Bermuda & Azores on Celebrity Apex.",
-    priceFrom:1011,
-    infoUrl: c118Ref("CELEBAX13T144-250426"),
-    interestSubject:"Celebrity Apex Transatlantic April 2026"
-  },
-  {
-    line:"Celebrity", ship:"Celebrity Eclipse",
-    name:"Transatlantic — Fort Lauderdale to Amsterdam",
-    ref:"CELEBEC14T250-250426",
-    month:"April", year:2026, nights:14, seaDays:9,
-    departure:"Fort Lauderdale (fly out)",
-    destination:"Amsterdam",
-    fly:true,
-    bridge:"unhosted",
-    bridgeNote:"9 open Atlantic sea days via Funchal and La Coruña — fly out, cruise home.",
-    priceFrom:1774,
-    infoUrl: c118Ref("CELEBEC14T250-250426"),
-    interestSubject:"Celebrity Eclipse Transatlantic April 2026"
-  },
-  {
-    line:"Celebrity", ship:"Celebrity Apex",
     name:"Transatlantic — Southampton to Port Canaveral",
     ref:"CELEBAX13T247-181026",
     month:"October", year:2026, nights:13, seaDays:8,
@@ -853,18 +826,6 @@ const cruises = [
   },
 
   // ── PRINCESS ─────────────────────────────────────────────────────────────
-  {
-    line:"Princess", ship:"Sky Princess",
-    name:"Canary Islands Discovery",
-    ref:"PRINCESSY613",
-    month:"March", year:2026, nights:12, seaDays:5,
-    departure:"Southampton", destination:"Canary Islands",
-    bridge:"unhosted",
-    bridgeNote:"12 nights with 5 sea days — strong bridge community on Sky Princess.",
-    priceFrom:1399,
-    infoUrl: c118Ref("PRINCESSY613"),
-    interestSubject:"Princess Sky Princess Canaries March 2026"
-  },
   {
     line:"Princess", ship:"Sky Princess",
     name:"Northern Europe & Mediterranean Grand Tour",
@@ -918,20 +879,6 @@ const cruises = [
     interestSubject:"Royal Caribbean Liberty Transatlantic October 2026"
   },
   {
-    line:"Royal Caribbean", ship:"Liberty of the Seas",
-    name:"Transatlantic — Fort Lauderdale to Southampton",
-    ref:"RCILB16T214-030426",
-    month:"April", year:2026, nights:16, seaDays:10,
-    departure:"Fort Lauderdale (fly out)",
-    destination:"Southampton",
-    fly:true,
-    bridge:"unhosted",
-    bridgeNote:"16 nights repositioning west to east — fly to Florida, sail home with 10 sea days.",
-    priceFrom:1189,
-    infoUrl: c118Ref("RCILB16T214-030426"),
-    interestSubject:"Royal Caribbean Liberty Transatlantic April 2026"
-  },
-  {
     line:"Royal Caribbean", ship:"Explorer of the Seas",
     name:"Transatlantic — Miami to Barcelona (Fly-Cruise)",
     ref:"RCIEX13T147-311026",
@@ -947,44 +894,8 @@ const cruises = [
   },
 
   // ── CARNIVAL ─────────────────────────────────────────────────────────────
-  {
-    line:"Carnival", ship:"Carnival Legend",
-    name:"Transatlantic — Miami to Dover",
-    ref:"CARNIVALLE2405202614",
-    month:"May", year:2026, nights:14, seaDays:9,
-    departure:"Miami (fly out)",
-    destination:"Dover",
-    fly:true,
-    bridge:"unhosted",
-    bridgeNote:"9 Atlantic sea days — excellent value transatlantic, fly to Miami and cruise home to Dover.",
-    priceFrom:857,
-    infoUrl: c118Ref("CARNIVALLE2405202614"),
-    interestSubject:"Carnival Legend Transatlantic May 2026"
-  },
 
   // ── FRED OLSEN ───────────────────────────────────────────────────────────
-  {
-    line:"Fred Olsen", ship:"Balmoral",
-    name:"Scenic Waterways and Cities of Scandinavia",
-    month:"May", year:2026, nights:9, seaDays:6,
-    departure:"Newcastle", destination:"Scandinavia",
-    bridge:"hosted",
-    bridgeNote:"Hosted bridge programme with daily sessions and tutored seminars on board.",
-    priceFrom:1329,
-    infoUrl: foUrl("/cruise/scandinavia-l2614"),
-    interestSubject:"Fred Olsen Scandinavia May 2026 (L2614)"
-  },
-  {
-    line:"Fred Olsen", ship:"Balmoral",
-    name:"Scenic Coastlines of the British Isles",
-    month:"August", year:2026, nights:9, seaDays:7,
-    departure:"Newcastle", destination:"British Isles",
-    bridge:"hosted",
-    bridgeNote:"Hosted bridge programme with daily sessions and seminars on board.",
-    priceFrom:1209,
-    infoUrl: foUrl("/cruise/scenic-scotland-t2610"),
-    interestSubject:"Fred Olsen British Isles August 2026 (L2627)"
-  },
   {
     line:"Fred Olsen", ship:"Balmoral",
     name:"Canary Islands and Madeira Winter Warmth",
@@ -1006,6 +917,29 @@ const cruises = [
     priceFrom:1099,
     infoUrl: foUrl("/cruise/spain-portugal-l2706"),
     interestSubject:"Fred Olsen Spain Portugal March 2027 (L2706)"
+  },
+  // ── FRED OLSEN NEW ───────────────────────────────────────────────────────
+  {
+    line:"Fred Olsen", ship:"Balmoral",
+    name:"Spain & the River Cities of France",
+    month:"September", year:2026, nights:12, seaDays:6,
+    departure:"Southampton", destination:"Spain & France",
+    bridge:"hosted",
+    bridgeNote:"Hosted bridge programme with daily sessions and tutored seminars on board.",
+    priceFrom:1449,
+    infoUrl: foUrl("/cruise/spain-france-l2631"),
+    interestSubject:"Fred Olsen Spain France September 2026 (L2631)"
+  },
+  {
+    line:"Fred Olsen", ship:"Balmoral",
+    name:"Southern Spain & Portugal Winter Warmth",
+    month:"January", year:2027, nights:13, seaDays:7,
+    departure:"Southampton", destination:"Spain & Portugal",
+    bridge:"hosted",
+    bridgeNote:"Hosted bridge programme — 13 nights with 7 sea days, ideal winter bridge voyage.",
+    priceFrom:1259,
+    infoUrl: foUrl("/cruise/spain-portugal-l2702"),
+    interestSubject:"Fred Olsen Spain Portugal January 2027 (L2702)"
   },
 
   // ── AMBASSADOR ───────────────────────────────────────────────────────────
