@@ -505,87 +505,71 @@ body {
 }
 
 /* ── SOFT PROMPT MODAL ──────────────────────────────────────── */
-html, body { height: 100%; }
-.sp-overlay {
+/* ── INLINE SOFT PROMPT ─────────────────────────────────── */
+.sp-inline {
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(10,22,40,0.78);
-  z-index: 99999;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  overflow-y: auto;
-}
-.sp-overlay.open { display: flex; }
-.sp-box {
-  background: white;
-  border-radius: 10px;
-  max-width: 460px;
-  width: 100%;
-  overflow: hidden;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.35);
-  animation: modalIn 0.22s ease;
-}
-.sp-header {
   background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 100%);
-  padding: 20px 24px 16px;
-  position: relative;
+  border-radius: 6px;
+  padding: 16px;
+  margin-top: 8px;
+  animation: modalIn 0.2s ease;
 }
-.sp-header h3 {
+.sp-inline.open { display: block; }
+.sp-inline-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   color: #f0e8d0;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
-.sp-header p { font-size: 0.82rem; color: #a09880; line-height: 1.5; }
-.sp-cruise-name {
-  background: #f8f4ec;
-  border-left: 3px solid #c8aa5a;
-  padding: 10px 14px;
-  font-size: 0.85rem;
-  color: #0a1628;
-  font-weight: 600;
-  margin: 16px 24px 0;
-  border-radius: 0 4px 4px 0;
+.sp-inline-cruise {
+  font-size: 0.75rem;
+  color: #c8aa5a;
+  font-weight: 700;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.sp-body { padding: 16px 24px 24px; }
-.sp-body p { font-size: 0.88rem; color: #555; line-height: 1.55; margin-bottom: 16px; }
+.sp-inline p {
+  font-size: 0.82rem;
+  color: #a09880;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
 .sp-btn-register {
   display: block;
   width: 100%;
-  padding: 12px;
+  padding: 11px;
   background: #c8aa5a;
   color: #0a1628;
   border: none;
   border-radius: 5px;
   font-family: Lato, sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
-  margin-bottom: 10px;
-  transition: background 0.18s;
+  margin-bottom: 8px;
+  text-decoration: none;
+  text-align: center;
+  box-sizing: border-box;
 }
 .sp-btn-register:hover { background: #d4b86a; }
 .sp-btn-continue {
   display: block;
   width: 100%;
-  padding: 11px;
-  background: white;
-  color: #0a1628;
-  border: 1.5px solid #e0d8c4;
+  padding: 10px;
+  background: transparent;
+  color: #c8c0a8;
+  border: 1px solid rgba(200,170,90,0.3);
   border-radius: 5px;
   font-family: Lato, sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.18s;
+  text-align: center;
+  box-sizing: border-box;
 }
-.sp-btn-continue:hover { background: #f8f4ec; }
-.sp-skip { text-align: center; margin-top: 10px; font-size: 0.78rem; color: #bbb; }
+.sp-btn-continue:hover { background: rgba(255,255,255,0.05); }
 </style>
 </head>
 <body>
@@ -688,20 +672,14 @@ html, body { height: 100%; }
 
 </div>
 
-<!-- SOFT PROMPT MODAL -->
-<div class="sp-overlay" id="sp-modal">
-  <div class="sp-box" id="sp-box">
-    <div class="sp-header">
-      <h3>Before you go — join the group!</h3>
-      <p>Register your interest and we'll connect you with other bridge players on this sailing.</p>
-    </div>
-    <div class="sp-cruise-name" id="sp-cruise-name"></div>
-    <div class="sp-body">
-      <p>It takes 30 seconds — and if enough players register, we'll help organise a Bridge at Sea group on this cruise. Solo travellers welcome.</p>
-      <button class="sp-btn-register" id="sp-btn-register">Register My Interest First →</button>
-      <button class="sp-btn-continue" id="sp-btn-continue">Continue to cruise details</button>
-      <div class="sp-skip">You can also register later using the button on the card</div>
-    </div>
+<!-- INLINE SOFT PROMPT TEMPLATE (hidden) -->
+<div id="sp-template" style="display:none;">
+  <div class="sp-inline">
+    <div class="sp-inline-title">Before you go — join the group!</div>
+    <div class="sp-inline-cruise"></div>
+    <p>It takes 30 seconds. Register your interest and we'll connect you with other bridge players on this sailing.</p>
+    <a class="sp-btn-register" href="#">Register My Interest First →</a>
+    <a class="sp-btn-continue" href="#">Continue to cruise details →</a>
   </div>
 </div>
 
@@ -1041,8 +1019,9 @@ function renderCards(list) {
         '</div>' +
         '<div class="cf-card-footer">' +
           '<a class="cf-interest-btn" href="' + GOOGLE_FORM_BASE + encodeURIComponent(c.interestSubject) + '" target="_blank" rel="noopener">🃏 Register Group Interest</a>' +
-          '<a class="cf-info-btn sp-trigger" href="' + c.infoUrl + '" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '">More Information →</a>' +
-          '<a class="cf-book-btn sp-trigger" href="' + c.infoUrl + '" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '">Book via ' + getBookLabel(c.line) + ' →</a>' +
+          '<a class="cf-info-btn sp-trigger" href="#" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '" data-label="More Information →">More Information →</a>' +
+          '<a class="cf-book-btn sp-trigger" href="#" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '" data-label="Book via ' + getBookLabel(c.line) + ' →">Book via ' + getBookLabel(c.line) + ' →</a>' +
+          '<div class="sp-inline-wrap"></div>' +
         '</div>' +
       '</div>'
     );
@@ -1086,24 +1065,11 @@ function openInterest(cruiseName) {
   window.open(GOOGLE_FORM_BASE + encodeURIComponent(cruiseName), '_blank');
 }
 
-// ── SOFT PROMPT — fires when clicking More Info or Book ──────────────────────
-var _pendingUrl = '';
-
-function softPrompt(cruiseName, destUrl) {
-  _pendingUrl = destUrl;
-  document.getElementById('sp-cruise-name').textContent = cruiseName;
-  document.getElementById('sp-modal').classList.add('open');
-  // Scroll the modal box into view wherever the user is on the page
-  setTimeout(function() {
-    var box = document.getElementById('sp-box');
-    if (box) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 50);
-}
-
+// ── INLINE SOFT PROMPT ───────────────────────────────────────────────────────
 function closeSoftPrompt() {
-  document.getElementById('sp-modal').classList.remove('open');
-  document.body.style.overflow = '';
-  _pendingUrl = '';
+  document.querySelectorAll('.sp-inline.open').forEach(function(el) {
+    el.classList.remove('open');
+  });
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
@@ -1111,40 +1077,49 @@ document.addEventListener('DOMContentLoaded', function() {
   // Wire up buttons
   document.getElementById('cf-search-btn').addEventListener('click', applyFilters);
   document.getElementById('cf-reset-btn').addEventListener('click', resetFilters);
-  // Wire soft prompt modal buttons
-  document.getElementById('sp-btn-register').addEventListener('click', function() {
-    var cruise = document.getElementById('sp-cruise-name').textContent;
-    closeSoftPrompt();
-    window.open(GOOGLE_FORM_BASE + encodeURIComponent(cruise), '_blank');
-  });
-  document.getElementById('sp-btn-continue').addEventListener('click', function() {
-    var url = _pendingUrl;
-    closeSoftPrompt();
-    window.open(url, '_blank');
-  });
-  document.getElementById('sp-modal').addEventListener('click', function(e) {
-    if (e.target === this) closeSoftPrompt();
-  });
-
-  // Event delegation for all card triggers
+  // Event delegation for inline soft prompt and card buttons
   document.getElementById('cruise-grid').addEventListener('click', function(e) {
-    // Soft prompt (More Info / Book buttons)
-    var spTrigger = e.target.closest('.sp-trigger');
-    if (spTrigger) {
-      e.preventDefault();
-      var cruise = spTrigger.getAttribute('data-cruise');
-      var url    = spTrigger.getAttribute('data-url');
-      softPrompt(cruise, url);
-      return;
-    }
-    // Direct interest registration button
-    var interestTrigger = e.target.closest('.interest-trigger');
-    if (interestTrigger) {
-      e.preventDefault();
-      var cruise = interestTrigger.getAttribute('data-cruise');
-      window.open(GOOGLE_FORM_BASE + encodeURIComponent(cruise), '_blank');
-      return;
-    }
+    var trigger = e.target.closest('.sp-trigger');
+    if (!trigger) return;
+    e.preventDefault();
+
+    var cruise = trigger.getAttribute('data-cruise');
+    var url    = trigger.getAttribute('data-url');
+
+    // Close any open prompts first
+    closeSoftPrompt();
+
+    // Find wrap div in same card footer
+    var footer = trigger.closest('.cf-card-footer');
+    if (!footer) return;
+    var wrap = footer.querySelector('.sp-inline-wrap');
+    if (!wrap) return;
+
+    // Clone template and populate
+    var tmpl = document.getElementById('sp-template').querySelector('.sp-inline');
+    var clone = tmpl.cloneNode(true);
+    clone.querySelector('.sp-inline-cruise').textContent = cruise;
+
+    // Wire register button
+    var regBtn = clone.querySelector('.sp-btn-register');
+    regBtn.href = GOOGLE_FORM_BASE + encodeURIComponent(cruise);
+    regBtn.target = '_blank';
+    regBtn.rel = 'noopener';
+
+    // Wire continue button
+    var contBtn = clone.querySelector('.sp-btn-continue');
+    contBtn.href = url;
+    contBtn.target = '_blank';
+    contBtn.rel = 'noopener';
+
+    wrap.innerHTML = '';
+    wrap.appendChild(clone);
+    clone.classList.add('open');
+
+    // Scroll into view on mobile
+    setTimeout(function() {
+      clone.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
   });
 
   // Update hero stat
