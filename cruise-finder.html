@@ -581,9 +581,8 @@ body {
     <h1>Find your perfect <em>bridge cruise</em></h1>
     <p>Curated voyages with 5+ sea days — handpicked for bridge players. Every listing links directly to the cruise details page so you can research and book with confidence.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="num" id="stat-cruises">—</span><span class="lbl">Cruises Listed</span></div>
-      <div class="hero-stat"><span class="num" id="stat-lines">9</span><span class="lbl">Cruise Lines</span></div>
       <div class="hero-stat"><span class="num">5+</span><span class="lbl">Sea Days Min.</span></div>
+      <div class="hero-stat"><span class="num">↻</span><span class="lbl">Updated Monthly</span></div>
     </div>
   </div>
 
@@ -1018,9 +1017,8 @@ function renderCards(list) {
           refNote +
         '</div>' +
         '<div class="cf-card-footer">' +
-          '<a class="cf-interest-btn" href="' + GOOGLE_FORM_BASE + encodeURIComponent(c.interestSubject) + '" target="_blank" rel="noopener">🃏 Register Group Interest</a>' +
+          '<a class="cf-interest-btn" href="' + GOOGLE_FORM_BASE + encodeURIComponent(c.interestSubject) + '">🃏 Register Group Interest</a>' +
           '<a class="cf-info-btn sp-trigger" href="#" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '" data-label="More Information →">More Information →</a>' +
-          '<a class="cf-book-btn sp-trigger" href="#" data-cruise="' + c.interestSubject.replace(/"/g,'&quot;') + '" data-url="' + c.infoUrl.replace(/"/g,'&quot;') + '" data-label="Book via ' + getBookLabel(c.line) + ' →">Book via ' + getBookLabel(c.line) + ' →</a>' +
           '<div class="sp-inline-wrap"></div>' +
         '</div>' +
       '</div>'
@@ -1058,7 +1056,7 @@ function resetFilters() {
 }
 
 // ── GOOGLE FORM ─────────────────────────────────────────────────────────────
-var GOOGLE_FORM_BASE = 'https://docs.google.com/forms/d/e/1FAIpQLSf2WkDMVTfTmN7sCACBHiT5u1BpF9o7t8VOlAUj4jCqaLCdDA/viewform?usp=pp_url&entry.275018667=';
+var GOOGLE_FORM_BASE = 'https://bridgescorer.com/group-interest/?cruise=';
 
 // Direct Register Interest button — opens Google Form with cruise pre-filled
 function openInterest(cruiseName) {
