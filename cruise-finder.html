@@ -581,6 +581,7 @@ body {
     <h1>Find your perfect <em>bridge cruise</em></h1>
     <p>Curated voyages with 5+ sea days — handpicked for bridge players. Browse the details, then register your group interest and let us negotiate better rates on your behalf.</p>
     <div class="hero-stats">
+      <div class="hero-stat"><span class="num" id="stat-cruises">—</span><span class="lbl">Curated Cruises</span></div>
       <div class="hero-stat"><span class="num">5+</span><span class="lbl">Sea Days Min.</span></div>
       <div class="hero-stat"><span class="num">↻</span><span class="lbl">Updated Monthly</span></div>
     </div>
@@ -881,7 +882,7 @@ const cruises = [
     bridge:"hosted",
     bridgeNote:"Hosted bridge programme on board — Fred Olsen's most popular bridge sailing.",
     priceFrom:1349,
-    infoUrl: foUrl("/cruise/canary-islands-l2701"),
+    infoUrl: foUrl("/cruise/l2701"),
     interestSubject:"Fred Olsen Canary Islands January 2027 (L2701)"
   },
   {
@@ -892,7 +893,7 @@ const cruises = [
     bridge:"hosted",
     bridgeNote:"Hosted bridge programme — daily sessions and tutored seminars on board.",
     priceFrom:1099,
-    infoUrl: foUrl("/cruise/spain-portugal-l2706"),
+    infoUrl: foUrl("/cruise/l2706"),
     interestSubject:"Fred Olsen Spain Portugal March 2027 (L2706)"
   },
   // ── FRED OLSEN NEW ───────────────────────────────────────────────────────
@@ -904,7 +905,7 @@ const cruises = [
     bridge:"hosted",
     bridgeNote:"Hosted bridge programme with daily sessions and tutored seminars on board.",
     priceFrom:1449,
-    infoUrl: foUrl("/cruise/spain-france-l2631"),
+    infoUrl: foUrl("/cruise/l2631"),
     interestSubject:"Fred Olsen Spain France September 2026 (L2631)"
   },
   {
@@ -915,7 +916,7 @@ const cruises = [
     bridge:"hosted",
     bridgeNote:"Hosted bridge programme — 13 nights with 7 sea days, ideal winter bridge voyage.",
     priceFrom:1259,
-    infoUrl: foUrl("/cruise/spain-portugal-l2702"),
+    infoUrl: foUrl("/cruise/l2702"),
     interestSubject:"Fred Olsen Spain Portugal January 2027 (L2702)"
   },
 
@@ -928,7 +929,7 @@ const cruises = [
     bridge:"hosted",
     bridgeNote:"Hosted bridge programme on Borealis — ports kept secret until arrival, adding a wonderful sense of adventure. Adults-only sailing.",
     priceFrom:999,
-    infoUrl: foUrl("/cruise/captains-mystery-cruise-s2627"),
+    infoUrl: foUrl("/cruise/s2627"),
     interestSubject:"Fred Olsen Mystery Cruise October 2026 (S2627)"
   },
   {
@@ -939,7 +940,7 @@ const cruises = [
     bridge:"hosted",
     bridgeNote:"Hosted bridge programme — 23 nights with 9 sea days via Dubrovnik, Kotor, Sicily, Sardinia, Valletta and Gibraltar. Our top featured cruise.",
     priceFrom:2899,
-    infoUrl: foUrl("/cruise/islands-mediterranean-croatia-t2627"),
+    infoUrl: foUrl("/cruise/t2627"),
     interestSubject:"Fred Olsen Bolette Mediterranean Croatia October 2026 (T2627)"
   },
   {
@@ -952,11 +953,11 @@ const cruises = [
     bridge:"hosted",
     bridgeNote:"Hosted bridge programme — fly-cruise visiting lesser-known Greek Islands at a quieter time of year. Includes overnight in Kavala and Limassol.",
     priceFrom:1379,
-    infoUrl: foUrl("/cruise/exploring-greek-islands-l2636"),
+    infoUrl: foUrl("/cruise/l2636"),
     interestSubject:"Fred Olsen Balmoral Greek Islands October 2026 (L2636)"
   },
 
-  // ── AMBASSADOR ───────────────────────────────────────────────────────────
+  // ── AMBASSADOR OCTOBER 2026 ──────────────────────────────────────────────
   {
     line:"Ambassador", ship:"Ambience",
     name:"Norway's Land of the Northern Lights",
@@ -979,6 +980,8 @@ const cruises = [
     infoUrl: ambUrl("/cruise/a22629br-norway-s-land-of-the-northern-lights/"),
     interestSubject:"Ambassador Ambition Northern Lights Norway October 2026 (A22629BR)"
   },
+
+  // ── AMBASSADOR ───────────────────────────────────────────────────────────
   {
     line:"Ambassador", ship:"Ambience",
     name:"Canary Islands Winter Escape",
