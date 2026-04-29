@@ -608,18 +608,15 @@ body {
       <label>Month</label>
       <select id="filter-month">
         <option value="">Any Month</option>
-        <option value="April">April</option>
-        <option value="May">May</option>
-        <option value="June">June</option>
-        <option value="July">July</option>
-        <option value="August">August</option>
-        <option value="September">September</option>
-        <option value="October">October</option>
-        <option value="November">November</option>
-        <option value="December">December</option>
-        <option value="January">January</option>
-        <option value="February">February</option>
-        <option value="March">March</option>
+        <option value="September">September 2026</option>
+        <option value="October">October 2026</option>
+        <option value="November">November 2026</option>
+        <option value="December">December 2026</option>
+        <option value="January">January 2027</option>
+        <option value="February">February 2027</option>
+        <option value="March">March 2027</option>
+        <option value="April">April 2027</option>
+        <option value="May">May 2027</option>
       </select>
     </div>
     <div class="cf-filter-group">
@@ -701,6 +698,20 @@ const cruises = [
   // ── CUNARD ──────────────────────────────────────────────────────────────
   {
     line:"Cunard", ship:"Queen Mary 2",
+    name:"Transatlantic Crossing — New York to Southampton",
+    ref:"CUNARDM611T",
+    month:"June", year:2026, nights:7, seaDays:7,
+    departure:"Southampton (ends NY, fly back)",
+    destination:"New York",
+    fly:true,
+    bridge:"unhosted",
+    bridgeNote:"Seven uninterrupted sea days across the Atlantic. QM2's card room is legendary for bridge.",
+    priceFrom:999,
+    infoUrl: c118Ref("CUNARDM611T"),
+    interestSubject:"QM2 Transatlantic June 2026 (NY to Soton)"
+  },
+  {
+    line:"Cunard", ship:"Queen Mary 2",
     name:"Transatlantic Crossing — Southampton to New York",
     ref:"CUNARDM627B",
     month:"October", year:2026, nights:7, seaDays:7,
@@ -711,105 +722,30 @@ const cruises = [
     infoUrl: c118Ref("CUNARDM627B"),
     interestSubject:"QM2 Transatlantic October 2026"
   },
-  {
-    line:"Ambassador", ship:"Ambition",
-    name:"Vistas of France, Spain & Portugal",
-    month:"September", year:2026, nights:13, seaDays:6,
-    departure:"Bristol Royal Portbury", destination:"France, Spain & Portugal",
-    bridge:"unhosted",
-    bridgeNote:"13 nights from Bristol — Ambition carries 7 bridge tables. No flying required from a convenient west coast port.",
-    priceFrom:1549,
-    infoUrl: ambUrl("/cruise/a22625br-vistas-of-france-spain-and-portugal/"),
-    interestSubject:"Ambassador Ambition France Spain Portugal September 2026 (A22625BR)"
-  },
-  {
-    line:"Ambassador", ship:"Ambition",
-    name:"Christmas & New Year to Spain & Portugal",
-    month:"December", year:2026, nights:15, seaDays:7,
-    departure:"Tilbury", destination:"Spain & Portugal — Festive Voyage",
-    bridge:"unhosted",
-    bridgeNote:"Ambition carries 7 bridge tables — celebrate Christmas and New Year at sea with fellow bridge players. No flying required.",
-    priceFrom:1399,
-    infoUrl: ambUrl("/cruise/a22638-christmas-new-year-voyage-to-spain-portugal/"),
-    interestSubject:"Ambassador Ambition Christmas New Year December 2026 (A22638)"
-  },
-
   // ── CUNARD NEW ───────────────────────────────────────────────────────────
   {
     line:"Cunard", ship:"Queen Mary 2",
-    name:"Canary Islands & Atlantic Islands",
-    ref:"CUNARDH712",
-    month:"February", year:2027, nights:18, seaDays:8,
-    departure:"Southampton", destination:"Canary Islands & Lisbon",
-    bridge:"unhosted",
-    bridgeNote:"QM2's dedicated card room — excellent bridge community on longer winter voyages. Via Tenerife, La Palma, Gran Canaria, Lanzarote and Lisbon.",
-    priceFrom:1221,
-    infoUrl: c118Ref("CUNARDH712"),
-    interestSubject:"QM2 Canary Islands February 2027 (CUNARDH712)"
-  },
-
-  // ── PRINCESS MARCH/APRIL 2027 ────────────────────────────────────────────
-  {
-    line:"Princess", ship:"Sky Princess",
-    name:"Mediterranean Grand Tour",
-    ref:"PRINCESSY720",
-    month:"March", year:2027, nights:28, seaDays:8,
-    departure:"Southampton", destination:"Mediterranean, Greece & Turkey",
-    bridge:"unhosted",
-    bridgeNote:"Sky Princess has a strong card room culture — 28 nights via Cádiz, Barcelona, Marseille, Livorno, Civitavecchia, Naples, Istanbul, Kusadasi, Mykonos, Athens, Valletta, Gibraltar and Vigo. Excellent sea day count.",
-    priceFrom:1344,
-    infoUrl: c118Ref("PRINCESSY720"),
-    interestSubject:"Princess Sky Princess Mediterranean Grand Tour March 2027 (PRINCESSY720)"
-  },
-  {
-    line:"Princess", ship:"Sky Princess",
-    name:"Transatlantic — Fort Lauderdale to Southampton",
-    ref:"PRINCESSZ716",
-    month:"April", year:2027, nights:14, seaDays:9,
-    departure:"Fort Lauderdale (fly out)", destination:"Southampton",
-    fly:true,
-    bridge:"unhosted",
-    bridgeNote:"9 Atlantic sea days on the spring repositioning crossing — one of the best bridge sailing opportunities of the year. Fly to Florida, cruise back to the UK.",
-    priceFrom:1199,
-    infoUrl: c118Url("/cruise-line/princess-cruises/transatlantic"),
-    interestSubject:"Princess Sky Princess Transatlantic April 2027"
-  },
-  {
-    line:"Royal Caribbean", ship:"Liberty of the Seas",
-    name:"Transatlantic — Fort Lauderdale to Southampton",
-    ref:"RCILB16T147-030427",
-    month:"April", year:2027, nights:16, seaDays:10,
-    departure:"Fort Lauderdale (fly out)", destination:"Southampton",
-    fly:true,
-    bridge:"unhosted",
-    bridgeNote:"10 Atlantic sea days on the spring repositioning — Liberty of the Seas returns to Southampton for summer 2027. Excellent value transatlantic crossing.",
-    priceFrom:1299,
-    infoUrl: c118Url("/cruise-line/royal-caribbean-international/transatlantic"),
-    interestSubject:"Royal Caribbean Liberty Transatlantic April 2027"
-  },
-  {
-    line:"Cunard", ship:"Queen Mary 2",
     name:"Transatlantic Crossing — Southampton to New York",
-    ref:"CUNARDM727",
-    month:"May", year:2027, nights:7, seaDays:7,
+    ref:"CUNARDM616",
+    month:"July", year:2026, nights:7, seaDays:7,
     departure:"Southampton", destination:"New York",
     bridge:"unhosted",
-    bridgeNote:"Seven uninterrupted sea days across the Atlantic. QM2's card room is legendary for bridge — the gold standard of bridge cruising.",
-    priceFrom:899,
-    infoUrl: c118Ref("CUNARDM727"),
-    interestSubject:"QM2 Transatlantic May 2027"
+    bridgeNote:"Seven full sea days — QM2's dedicated card room is a bridge institution. Abbey Road themed event voyage.",
+    priceFrom:2036,
+    infoUrl: c118Ref("CUNARDM616"),
+    interestSubject:"QM2 Transatlantic July 2026"
   },
 
   // ── P&O ─────────────────────────────────────────────────────────────────
   {
     line:"P&O", ship:"Ventura",
-    name:"Spain, Portugal & Cape Verde",
+    name:"Canary Islands & Atlantic Islands",
     ref:"PON633N",
     month:"December", year:2026, nights:18, seaDays:7,
-    departure:"Southampton", destination:"Spain, Portugal & Cape Verde",
+    departure:"Southampton", destination:"Canary Islands",
     bridge:"unhosted",
-    bridgeNote:"P&O has card rooms on most ships — active bridge on sea days. 18 nights via Funchal, Cape Verde islands, Lanzarote, Las Palmas, Cádiz and Lisbon.",
-    priceFrom:1066,
+    bridgeNote:"P&O has card rooms on most ships — active bridge on sea days.",
+    priceFrom:1114,
     infoUrl: c118Ref("PON633N"),
     interestSubject:"P&O Ventura Canary Islands December 2026"
   },
@@ -841,6 +777,18 @@ const cruises = [
   },
   {
     line:"Celebrity", ship:"Celebrity Apex",
+    name:"Arctic Circle & Norwegian Fjords",
+    ref:"CELEBAX12U416-110726",
+    month:"July", year:2026, nights:12, seaDays:6,
+    departure:"Southampton", destination:"Norway & Arctic",
+    bridge:"unhosted",
+    bridgeNote:"12 nights with 6 sea days — ideal bridge opportunity between spectacular fjord calls.",
+    priceFrom:2411,
+    infoUrl: c118Ref("CELEBAX12U416-110726"),
+    interestSubject:"Celebrity Apex Norway July 2026"
+  },
+  {
+    line:"Celebrity", ship:"Celebrity Apex",
     name:"Transatlantic — Southampton to Port Canaveral",
     ref:"CELEBAX13T247-181026",
     month:"October", year:2026, nights:13, seaDays:8,
@@ -867,6 +815,30 @@ const cruises = [
   },
 
   // ── NORWEGIAN ────────────────────────────────────────────────────────────
+  {
+    line:"Norwegian", ship:"Norwegian Sky",
+    name:"Iceland, Faroe Islands & Scottish Highlands",
+    ref:"NCLSKY-20260618-10-SOU-SOU",
+    month:"June", year:2026, nights:10, seaDays:5,
+    departure:"Southampton", destination:"Iceland & Scotland",
+    bridge:"unhosted",
+    bridgeNote:"10 nights roundtrip Southampton — 5 sea days with Freestyle Cruising flexibility.",
+    priceFrom:854,
+    infoUrl: c118Ref("NCLSKY-20260618-10-SOU-SOU"),
+    interestSubject:"Norwegian Sky Iceland June 2026"
+  },
+  {
+    line:"Norwegian", ship:"Norwegian Star",
+    name:"Iceland & Arctic Circle",
+    ref:"NCLSTA-20260621-11-SOU-REY",
+    month:"June", year:2026, nights:11, seaDays:6,
+    departure:"Southampton", destination:"Reykjavik",
+    bridge:"unhosted",
+    bridgeNote:"11 nights to Reykjavik — 6 sea days ideal for bridge between dramatic port calls.",
+    priceFrom:1648,
+    infoUrl: c118Ref("NCLSTA-20260621-11-SOU-REY"),
+    interestSubject:"Norwegian Star Iceland June 2026"
+  },
 
   // ── ROYAL CARIBBEAN ──────────────────────────────────────────────────────
   {
@@ -1001,44 +973,9 @@ const cruises = [
     departure:"Bristol", destination:"Norway & Arctic Circle",
     bridge:"unhosted",
     bridgeNote:"17 nights from Bristol — Ålesund, Tromsø, Alta, Hammerfest, Narvik & Bodø. Ambition carries 7 bridge tables — a dedicated group could have outstanding play on sea days.",
-    priceFrom:1709,
+    priceFrom:1429,
     infoUrl: ambUrl("/cruise/a22629br-norway-s-land-of-the-northern-lights/"),
     interestSubject:"Ambassador Ambition Northern Lights Norway October 2026 (A22629BR)"
-  },
-
-  // ── FRED OLSEN NOVEMBER 2026 / 2027 NEW ─────────────────────────────────
-  {
-    line:"Fred Olsen", ship:"Borealis",
-    name:"Canary Islands with the Fleet Fiesta",
-    month:"November", year:2026, nights:15, seaDays:8,
-    departure:"Southampton", destination:"Canary Islands & Las Palmas Fleet Reunion",
-    bridge:"hosted",
-    bridgeNote:"Hosted bridge programme — 15 nights with 8 sea days. Culminates in Fred Olsen's famous Fleet Fiesta in Las Palmas, where all three ships meet. Adults-only on Borealis.",
-    priceFrom:1799,
-    infoUrl: foUrl("/cruise/s2632"),
-    interestSubject:"Fred Olsen Borealis Canary Islands Fleet Fiesta November 2026 (S2632)"
-  },
-  {
-    line:"Fred Olsen", ship:"Bolette",
-    name:"Spain & Morocco with the Fleet Fiesta",
-    month:"November", year:2026, nights:16, seaDays:8,
-    departure:"Liverpool", destination:"Spain, Morocco & Las Palmas Fleet Reunion",
-    bridge:"hosted",
-    bridgeNote:"Hosted bridge programme — 16 nights from Liverpool via Spain and Morocco, joining the Fleet Fiesta in Las Palmas. Excellent sea day count.",
-    priceFrom:1849,
-    infoUrl: foUrl("/cruise/t2632"),
-    interestSubject:"Fred Olsen Bolette Spain Morocco Fleet Fiesta November 2026 (T2632)"
-  },
-  {
-    line:"Fred Olsen", ship:"Bolette",
-    name:"In Search of the Northern Lights",
-    month:"March", year:2027, nights:10, seaDays:5,
-    departure:"Southampton", destination:"Arctic Norway & Northern Lights",
-    bridge:"hosted",
-    bridgeNote:"Hosted bridge programme — 10 nights to Arctic Norway in search of the Aurora Borealis. Ideal for bridge players who want a shorter but spectacular voyage.",
-    priceFrom:1249,
-    infoUrl: foUrl("/cruise/t2709"),
-    interestSubject:"Fred Olsen Bolette Northern Lights March 2027 (T2709)"
   },
 
   // ── AMBASSADOR ───────────────────────────────────────────────────────────
@@ -1049,7 +986,7 @@ const cruises = [
     departure:"Tilbury", destination:"Canary Islands & Madeira",
     bridge:"unhosted",
     bridgeNote:"Ambition carries 7 bridge tables and a card room — ideal for an organised bridge group. 14 nights from Tilbury via Vigo, Funchal, Santa Cruz de La Palma and Tenerife.",
-    priceFrom:1469,
+    priceFrom:999,
     infoUrl: ambUrl("/cruise/a22632-autumn-escape-to-the-canary-islands/"),
     interestSubject:"Ambassador Ambition Canary Islands November 2026 (A22632)"
   },
